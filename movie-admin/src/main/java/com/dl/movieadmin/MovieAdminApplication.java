@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 董盺杰 小吊吊
+ * 董盺杰 小妹妹
  **/
 @SpringBootApplication
 public class MovieAdminApplication {
