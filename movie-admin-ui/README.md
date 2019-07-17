@@ -1,6 +1,17 @@
 # movie-admin-ui
 
-## Project setup
+### axios
+```
+npm insatll axios
+```
+
+### Ant Design
+```
+npm install ant-design-vue
+npm install less less-loader
+```
+
+### Project setup
 ```
 npm install
 ```
