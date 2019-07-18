@@ -34,6 +34,9 @@ npm install vue-chartjs chart.js
 
 ```
 
+https://www.npmjs.com/package/easy-pie-chart
+https://www.npmjs.com/package/vue-easy-pie-chart
+
 ### Project setup
 ```
 npm install
