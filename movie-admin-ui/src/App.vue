@@ -1,22 +1,15 @@
 <template>
   <div id="app">
       <a-layout id="components-layout-demo-fixed-sider">
-          <a-layout-sider :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }">
-              <div class="logo"></div>
-              <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
-                  <a-menu-item key="1">
-                      <a-icon type="home" />
-                      <span class="nav-text">
-                          <router-link to="/">Home</router-link>
-                      </span>
-                  </a-menu-item>
-
-                  <a-menu-item key="2">
-                      <a-icon type="video-camera" />
-                      <span class="nav-text">
-                          <router-link to="/about">About</router-link>
-                      </span>
-                  </a-menu-item>
+          <a-layout-sider :style="[styles.sider, styles.siderBg]">
+              <div class="logo">电影系统管理后台</div>
+              <a-menu theme="dark" mode="inline" :defaultSelectedKeys="common.defaultActive" :openKeys.sync="common.defaultOpen" :style="styles.siderBg">
+                  <!--<a-menu-item key="0">-->
+                      <!--<a-icon type="home" />-->
+                      <!--<span class="nav-text">-->
+                          <!--<router-link to="/">Dashboard</router-link>-->
+                      <!--</span>-->
+                  <!--</a-menu-item>-->
 
                   <a-sub-menu v-for="m in navs" :key="m.id">
                       <span slot="title"><a-icon :type="m.icon" /><span>{{m.name}}</span></span>
@@ -29,14 +22,14 @@
 
               </a-menu>
           </a-layout-sider>
-          <a-layout :style="{ marginLeft: '200px' }">
-              <a-layout-header :style="{ background: '#001529', padding: '0 15px', height: '68px', textAlign: 'right' }">
+          <a-layout :style="styles.content">
+              <a-layout-header class="app-header">
                   <a-button type="primary" icon="logout">退出</a-button>
               </a-layout-header>
               <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
                   <router-view/>
               </a-layout-content>
-              <a-layout-footer :style="{ textAlign: 'center' }">
+              <a-layout-footer :style="styles.footer">
                   Ant Design ©2018 Created by Ant UED
               </a-layout-footer>
           </a-layout>
@@ -48,6 +41,18 @@
         data: () => ({
             navs: [
                 {
+                    id: '0',
+                    name: '首页',
+                    url: '/',
+                    icon: 'home',
+                    subNavs: [
+                        {
+                            id: '0-1',
+                            name: 'Dashboard',
+                            url: ''
+                        }
+                    ]
+                },{
                     id: '1',
                     name: '用户管理',
                     url: '/userManage',
@@ -59,7 +64,7 @@
                             url: '/list'
                         },{
                             id: '1-2',
-                            name: '黑名单用户',
+                            name: '拉黑名单',
                             url: '/blackList'
                         },{
                             id: '1-3',
@@ -168,7 +173,39 @@
                         }
                     ]
                 }
-            ]
+            ],
+            styles: {
+                commonBgGradient: {
+                    background: 'linear-gradient(250deg, rgb(173, 57, 214), rgb(45, 150, 231))'
+                },
+                siderBg: {
+                    backgroundColor: '#327978',
+                    backgroundImage: 'linear-gradient(270deg,rgba(51,148,225,.18),transparent)'
+                },
+                sider: {
+                    overflow: 'auto',
+                    flex: '0 0 230px',
+                    maxWidth: '230px',
+                    minWidth: '230px',
+                    width: '230px',
+                    height: '100vh',
+                    position: 'fixed',
+                    left: 0
+                },
+                content: {
+                    marginLeft: '230px',
+                    backgroundColor: '#f2fdff'
+                },
+                footer: {
+                    textAlign: 'center',
+                    backgroundColor: '#fff'
+                }
+            },
+            common: {
+                defaultOpen: ['0'],
+                defaultActive: ['0-1'],
+
+            }
         }),
     }
 </script>
@@ -178,18 +215,55 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
-      color: #2c3e50;
+      /*color: #2c3e50;*/
     }
     #components-layout-demo-fixed-sider .logo {
-        height: 32px;
-        background: rgba(255,255,255,.2);
+        height: 60px;
+        /*background: linear-gradient(250deg, rgb(57, 207, 214), rgb(211, 231, 45));*/
+        background-color: #3b4546;
         margin: 16px;
+        padding: 19px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+    }
+    /*菜单a标签*/
+    .ant-menu.ant-menu-dark a{
+        text-decoration: none;
+        padding: 10px 46px;
+        color: #b7cacf;
+        font-size: 14px !important;
+    }
+    .ant-menu.ant-menu-dark a:hover{
+        color: #fff;
     }
     /*选中导航，前景色*/
     .ant-menu-item-selected a{
-        color: #fff;
+        color: #fff !important;
     }
     .ant-menu-item-selected a:hover{
         color: #fff;
+    }
+    /*上方导航条*/
+    .app-header {
+        background: #fff !important;
+        padding: 0px 15px !important;
+        height: 68px !important;
+        text-align: right;
+        box-shadow: 0px 0px 10px 0px rgba(101, 238, 255, 0.4);
+    }
+
+    .ant-menu.ant-menu-dark .ant-menu-item-selected{
+        background-color: #12B4B2 !important;
+    }
+    .ant-menu-dark .ant-menu-sub{
+        background-color: #447075 !important;
+    }
+    /*悬浮菜单颜色*/
+    .ant-menu-item:hover{
+        background-color: #225252 !important;
+    }
+    .ant-menu-submenu:hover{
+        background-color: #225252;
     }
 </style>
