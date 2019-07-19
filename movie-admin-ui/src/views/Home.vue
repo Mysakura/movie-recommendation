@@ -189,12 +189,12 @@
                                 label: '订单量',
                                 backgroundColor: '#f87979',
                                 data: [793,409,179,481,650,223,916,44,653,245,259,316,136,243,606,175,19,311,2,368,336,563,921,466,505,293,224,965,600,22],
-                                fill: false,
+                                fill: true,
                                 borderColor: '#f87979',             // 线条颜色
                                 pointBorderColor: '#f87979',       // 数据点边框颜色
                                 pointBackgroundColor: '#fff',  // 数据点背景色
-                                pointRadius: 5,                      // 数据点半径
-                                lineTension: 0,                      // 0-直线，> 0曲线
+                                pointRadius: 3,                      // 数据点半径
+                                lineTension: 0.4,                      // 0-直线，> 0曲线
                             }
                         ]
                     },

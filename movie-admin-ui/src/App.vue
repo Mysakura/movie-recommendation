@@ -30,7 +30,7 @@
                   <router-view/>
               </a-layout-content>
               <a-layout-footer :style="styles.footer">
-                  Ant Design ©2018 Created by Ant UED
+                  Movie Admin ©2019 Created by Dong & Liao
               </a-layout-footer>
           </a-layout>
       </a-layout>
