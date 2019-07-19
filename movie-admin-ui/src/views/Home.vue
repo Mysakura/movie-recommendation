@@ -1,37 +1,200 @@
 <template>
     <div>
-        <div class="panel">
-            <span class="inlinesparkline"></span>
-            <span class="inlinebar"></span>
-        </div>
-        <div>
-            <simple-line-chart :chartdata="dataSet.slc.chartdata" :options="dataSet.slc.options"></simple-line-chart>
-        </div>
+        <a-row>
+            <a-col :span="12">
+                <h2>
+                    <a-icon type="area-chart" />
+                    Analytics Dashboard
+                </h2>
+            </a-col>
+            <a-col :span="8" :offset="4">
+                <a-row>
+                    <a-col :span="12">
+                        <a-col :span="12" class="text-center">
+                            <div class="gray-title">User Number</div>
+                            <h2>255</h2>
+                        </a-col>
+                        <a-col :span="12">
+                            <span class="inlinebar">1, 4, 7, 5, 9, 10, 2, 6, 21, 8</span>
+                        </a-col>
+                    </a-col>
+                    <a-col :span="12">
+                        <a-col :span="12" class="text-center">
+                            <div class="gray-title">Movie Number</div>
+                            <h2>9999</h2>
+                        </a-col>
+                        <a-col :span="12">
+                            <span class="inlinebar2">2, 5, 9, 4, 2, 2, 15, 1, 6, 7</span>
+                        </a-col>
+                    </a-col>
+                </a-row>
+            </a-col>
+        </a-row>
+        <a-card title="应用监控">
+            <a-row>
+                <a-col :span="16">
+                    <simple-line-chart :chartdata="dataSet.slc.chartdata" :options="dataSet.slc.options"></simple-line-chart>
+                </a-col>
+                <a-col :span="8">
+                    <custom-progress :total="500" :already="100" title="在线用户"></custom-progress>
+                    <custom-progress :total="800" :already="100" title="在线用户" bg-color="#9c7bbd"></custom-progress>
+                </a-col>
+            </a-row>
+            <a-row class="pt-15 mt-15">
+                <a-col :span="6">
+                    <a-col :span="12">
+                        <a-col :span="12">
+                            <vue-easy-pie-chart :percent="90" bar-color="#16899c" :line-width="5"  font-size="14px" line-cap="butt" :size="dataSet.easyPie.size"></vue-easy-pie-chart>
+                        </a-col>
+                        <a-col :span="12">
+                            <div class="pie-info">JVM内存</div>
+                        </a-col>
+                    </a-col>
+                    <a-col :span="12" class="text-right">
+                        <a-col :span="12" class="mt-15">
+                            <span class="inlinesparkline"></span>
+                        </a-col>
+                        <a-col :span="12" class="little-tip mt-15">
+                            <a-tooltip>
+                                <template slot='title'>
+                                    总堆内存
+                                </template>
+                                <div class="tip">8G</div>
+                            </a-tooltip>
+                            <a-tooltip>
+                                <template slot='title'>
+                                    已用内存
+                                </template>
+                                <div class="tip">7.5G</div>
+                            </a-tooltip>
+                        </a-col>
+                    </a-col>
+                </a-col>
+                <a-col :span="6">
+                    <a-col :span="12">
+                        <a-col :span="12">
+                            <vue-easy-pie-chart :percent="82" bar-color="#7d9a0a" :line-width="5"  font-size="14px" line-cap="butt" :size="dataSet.easyPie.size"></vue-easy-pie-chart>
+                        </a-col>
+                        <a-col :span="12">
+                            <div class="pie-info">系统内存</div>
+                        </a-col>
+                    </a-col>
+                    <a-col :span="12" class="text-right">
+                        <a-col :span="12" class="mt-15">
+                            <span class="inlinesparkline"></span>
+                        </a-col>
+                        <a-col :span="12" class="little-tip mt-15">
+                            <a-tooltip>
+                                <template slot='title'>
+                                    总内存
+                                </template>
+                                <div class="tip">16G</div>
+                            </a-tooltip>
+                            <a-tooltip>
+                                <template slot='title'>
+                                    已用内存
+                                </template>
+                                <div class="tip">14.5G</div>
+                            </a-tooltip>
+                        </a-col>
+                    </a-col>
+                </a-col>
+                <a-col :span="6">
+                    <a-col :span="12">
+                        <a-col :span="12">
+                            <vue-easy-pie-chart :percent="30" bar-color="#2e2f2f" :line-width="5"  font-size="14px" line-cap="butt" :size="dataSet.easyPie.size"></vue-easy-pie-chart>
+                        </a-col>
+                        <a-col :span="12">
+                            <div class="pie-info">磁盘</div>
+                        </a-col>
+                    </a-col>
+                    <a-col :span="12" class="text-right">
+                        <a-col :span="12" class="mt-15">
+                            <span class="inlinesparkline"></span>
+                        </a-col>
+                        <a-col :span="12" class="little-tip mt-15">
+                            <a-tooltip>
+                                <template slot='title'>
+                                    总磁盘空间
+                                </template>
+                                <div class="tip">100G</div>
+                            </a-tooltip>
+                            <a-tooltip>
+                                <template slot='title'>
+                                    已用磁盘空间
+                                </template>
+                                <div class="tip">20G</div>
+                            </a-tooltip>
+                        </a-col>
+                    </a-col>
+                </a-col>
+                <a-col :span="6">
+                    <a-col :span="12">
+                        <a-col :span="12">
+                            <vue-easy-pie-chart :percent="25" bar-color="#c50e4a" :line-width="5"  font-size="14px" line-cap="butt" :size="dataSet.easyPie.size"></vue-easy-pie-chart>
+                        </a-col>
+                        <a-col :span="12">
+                            <div class="pie-info">线程</div>
+                        </a-col>
+                    </a-col>
+                    <a-col :span="12" class="text-right">
+                        <a-col :span="12" class="mt-15">
+                            <span class="inlinesparkline"></span>
+                        </a-col>
+                        <a-col :span="12" class="little-tip mt-15">
+                            <a-tooltip>
+                                <template slot='title'>
+                                    线程总数
+                                </template>
+                                <div class="tip">4</div>
+                            </a-tooltip>
+                            <a-tooltip>
+                                <template slot='title'>
+                                    工作线程，非守护线程
+                                </template>
+                                <div class="tip">1</div>
+                            </a-tooltip>
+                        </a-col>
+                    </a-col>
+                </a-col>
+            </a-row>
+        </a-card>
     </div>
 </template>
 <script>
     import $ from 'jquery'
     import '@/assets/jquery.sparkline.js'
     import SimpleLineChart from "../components/SimpleLineChart";
+    import ARow from "ant-design-vue/es/grid/Row";
+    import ACol from "ant-design-vue/es/grid/Col";
+    import VueEasyPieChart from 'vue-easy-pie-chart'
+    import 'vue-easy-pie-chart/dist/vue-easy-pie-chart.css'
+    import CustomProgress from "../components/CustomProgress";
 
     export default {
-        components: {SimpleLineChart},
+        components: {
+            CustomProgress,
+            VueEasyPieChart,
+            ACol,
+            ARow,
+            SimpleLineChart},
         name: 'home',
         data: () => ({
             dataSet: {
                 slc: {
                     chartdata: {
-                        labels: ['1', '2', '3', '4', '5', '6'],
+                        labels: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
                         datasets: [
                             {
-                                label: 'Data One',
+                                label: '订单量',
                                 backgroundColor: '#f87979',
-                                data: [4, 10, 5, 35, 20, 5],
+                                data: [793,409,179,481,650,223,916,44,653,245,259,316,136,243,606,175,19,311,2,368,336,563,921,466,505,293,224,965,600,22],
                                 fill: false,
                                 borderColor: '#f87979',             // 线条颜色
                                 pointBorderColor: '#f87979',       // 数据点边框颜色
                                 pointBackgroundColor: '#fff',  // 数据点背景色
-                                pointRadius: 5                      // 数据点半径
+                                pointRadius: 5,                      // 数据点半径
+                                lineTension: 0,                      // 0-直线，> 0曲线
                             }
                         ]
                     },
@@ -39,25 +202,39 @@
                         responsive: true,
                         maintainAspectRatio: false
                     }
+                },
+                easyPie:{
+                    size: 70
                 }
             }
         }),
         mounted: function () {
             $('.inlinesparkline').sparkline([1, 4, 4, 7, 5, 9, 10, 2], {
                 type: 'line',
-                lineColor: '#1dc9b7',
+                lineColor: '#a92f51',
                 width: '70px',
-                height: '32px',
+                height: '40px',
                 spotRadius: 3,    // 所有专色标记的半径,以像素为单位（默认值：1.5）
                 enableTagOptions: true,
                 disableHiddenCheck: false,
                 fillColor: false    // 填充图表下方区域,设置为false以禁用填充
             })
-            $('.inlinebar').sparkline([1, 4, 4, 7, 5, 9, 10, 2, 6, 21, 8], {
+
+            $('.inlinebar').sparkline('html', {
                 type: 'bar',
                 barColor: '#886ab5',
                 width: '85px',
-                height: '32px',
+                height: '46px',
+                barWidth: 5,    // 柱子宽度
+                barSpacing: 3,  // 间距
+                enableTagOptions: true,
+                disableHiddenCheck: false
+            })
+            $('.inlinebar2').sparkline('html', {
+                type: 'bar',
+                barColor: '#fe6bb0',
+                width: '85px',
+                height: '46px',
                 barWidth: 5,    // 柱子宽度
                 barSpacing: 3,  // 间距
                 enableTagOptions: true,
@@ -68,11 +245,26 @@
     }
 </script>
 <style scoped>
-    .panel{
-        box-sizing: border-box;
-        width: 100%;
-        height: 150px;
-        padding: 15px;
+    .vue-easy-pie-chart{
+        display: inline-block;
     }
-
+    .gray-title{
+        color: #969393;
+    }
+    .pie-info{
+        line-height: 70px;
+        font-size: 16px;
+        font-weight: 500;
+        display: inline-block;
+    }
+    .little-tip .tip{
+        width: 50px;
+        height: 22px;
+        margin: 0px auto 5px;
+        color: #fff;
+        background-color: #45b2e6;
+        box-sizing: border-box;
+        border-radius: 3px;
+        text-align: center;
+    }
 </style>

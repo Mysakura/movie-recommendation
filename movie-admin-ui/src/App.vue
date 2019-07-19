@@ -214,13 +214,14 @@
       font-family: 'Avenir', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-align: center;
+      /*text-align: center;*/
       /*color: #2c3e50;*/
     }
     #components-layout-demo-fixed-sider .logo {
         height: 60px;
         /*background: linear-gradient(250deg, rgb(57, 207, 214), rgb(211, 231, 45));*/
-        background-color: #3b4546;
+        /*条纹*/
+        background-image: repeating-linear-gradient(60deg,rgba(0,94,93,1),rgba(0,94,93,1) 15px,rgba(0,94,93,0.5) 0,rgba(0,94,93,0.5) 30px);
         margin: 16px;
         padding: 19px;
         font-size: 16px;
@@ -265,5 +266,22 @@
     }
     .ant-menu-submenu:hover{
         background-color: #225252;
+    }
+
+    /*自定义全局通用样式*/
+    .text-center{
+        text-align: center;
+    }
+    .text-right{
+        text-align: right;
+    }
+    .mt-15{
+        margin-top: 15px;
+    }
+    .pt-15{
+        padding-top: 15px;
+    }
+    .bt{
+        border-top: 1px solid #ddd;
     }
 </style>

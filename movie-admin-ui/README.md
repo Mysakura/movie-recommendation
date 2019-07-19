@@ -35,7 +35,12 @@ npm install vue-chartjs chart.js
 ```
 
 https://www.npmjs.com/package/easy-pie-chart
+
 https://www.npmjs.com/package/vue-easy-pie-chart
+
+```npm install vue-easy-pie-chart```
+
+地图插件：https://www.10bestdesign.com/jqvmap/
 
 ### Project setup
 ```
