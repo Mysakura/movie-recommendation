@@ -278,8 +278,26 @@
     .mt-15{
         margin-top: 15px;
     }
+    .ml-15{
+        margin-left: 15px !important;
+    }
+    .mr-15{
+        margin-right: 15px !important;
+    }
+    .ml-7-5{
+        margin-left: 7.5px !important;
+    }
+    .mr-7-5{
+        margin-right: 7.5px !important;
+    }
+    .mb-15{
+        margin-bottom: 15px !important;
+    }
     .pt-15{
         padding-top: 15px;
+    }
+    .pd-15{
+        padding: 15px !important;
     }
     .bt{
         border-top: 1px solid #ddd;

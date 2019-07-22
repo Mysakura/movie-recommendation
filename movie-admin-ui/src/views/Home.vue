@@ -37,7 +37,7 @@
                 </a-col>
                 <a-col :span="8">
                     <custom-progress :total="500" :already="100" title="在线用户"></custom-progress>
-                    <custom-progress :total="800" :already="100" title="在线用户" bg-color="#9c7bbd"></custom-progress>
+                    <custom-progress :total="800" :already="100" title="在线用户" bg-color="#9c7bbd" progress-text="100/800"></custom-progress>
                 </a-col>
             </a-row>
             <a-row class="pt-15 mt-15">
@@ -159,20 +159,40 @@
                 </a-col>
             </a-row>
         </a-card>
+        <a-row class="mt-15">
+            <a-col :span="12">
+                <a-card title="数据比例" class="mr-7-5">
+                    <div class="pd-15">
+                        <simple-doughnut-chart :chartdata="dataSet.sdc.chartdata" :options="dataSet.sdc.options"></simple-doughnut-chart>
+                    </div>
+                </a-card>
+            </a-col>
+            <a-col :span="12">
+                <a-card title="电影分布" class="ml-7-5">
+                    <div id="vmap" style="height: 400px;"></div>
+                    <div class="vmap-tip" id="vmapTip"></div>
+                </a-card>
+            </a-col>
+        </a-row>
     </div>
 </template>
 <script>
-    import $ from 'jquery'
-    import '@/assets/jquery.sparkline.js'
+    import $ from 'jquery';
+    import '@/assets/jquery.sparkline.js';
     import SimpleLineChart from "../components/SimpleLineChart";
     import ARow from "ant-design-vue/es/grid/Row";
     import ACol from "ant-design-vue/es/grid/Col";
-    import VueEasyPieChart from 'vue-easy-pie-chart'
-    import 'vue-easy-pie-chart/dist/vue-easy-pie-chart.css'
+    import VueEasyPieChart from 'vue-easy-pie-chart';
+    import 'vue-easy-pie-chart/dist/vue-easy-pie-chart.css';
     import CustomProgress from "../components/CustomProgress";
+    import SimpleDoughnutChart from "../components/SimpleDoughnutChart";
+    import '@/assets/jqvmap/jquery.vmap.js'
+    import '@/assets/jqvmap/maps/jquery.vmap.world.js'
+    import '@/assets/jqvmap/jqvmap.css'
 
     export default {
         components: {
+            SimpleDoughnutChart,
             CustomProgress,
             VueEasyPieChart,
             ACol,
@@ -195,6 +215,32 @@
                                 pointBackgroundColor: '#fff',  // 数据点背景色
                                 pointRadius: 3,                      // 数据点半径
                                 lineTension: 0.4,                      // 0-直线，> 0曲线
+                            },{
+                                label: '金额',
+                                backgroundColor: '#25cfc6',
+                                data: [793*2,409*2,179*2,481*2,650*2,223*2,916*2,44*2,653*2,245*2,259*2,316*2,136*2,243*2,606*2,175*2,19*2,311*2,2*2,368*2,336*2,563*2,
+                                    921*2,466*2,505*2,293*2,224*2,965*2,600*2,22*2],
+                                fill: true,
+                                borderColor: '#25cfc6',             // 线条颜色
+                                pointBorderColor: '#25cfc6',       // 数据点边框颜色
+                                pointBackgroundColor: '#fff',  // 数据点背景色
+                                pointRadius: 3,                      // 数据点半径
+                                lineTension: 0.4,                      // 0-直线，> 0曲线
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                },
+                sdc: {
+                    chartdata: {
+                        labels: ['用户','电影','影院','明星'],
+                        datasets: [
+                            {
+                                backgroundColor: ['#f87979','#d8c42a','#6db320','#f866e6'],
+                                data: [793,409,179,481]
                             }
                         ]
                     },
@@ -240,7 +286,33 @@
                 enableTagOptions: true,
                 disableHiddenCheck: false
             })
+            $('#vmap').vectorMap(
+                {
+                    map: 'world_en',
+                    backgroundColor: '#62adc3',
+                    borderColor: '#818181',
+                    borderOpacity: 0.25,
+                    borderWidth: 1,
+                    color: '#f4f3f0',
+                    enableZoom: true,
+                    hoverColor: '#aadc59',
+                    hoverOpacity: null,
+                    normalizeFunction: 'linear',
+                    scaleColors: ['#b6d6ff', '#005ace'],
+                    selectedColor: '#aadc59',
+                    selectedRegions: null,
+                    showTooltip: true,
+                    onRegionClick: function(element, code, region)
+                    {
+                        var message = 'You clicked "'
+                            + region
+                            + '" which has the code: '
+                            + code.toUpperCase();
 
+                        // alert(message);
+                        $('#vmapTip').text(message);
+                    }
+                });
         }
     }
 </script>
@@ -266,5 +338,12 @@
         box-sizing: border-box;
         border-radius: 3px;
         text-align: center;
+    }
+    .vmap-tip{
+        height: 30px;
+        background-color: rgb(98, 173, 195);
+        padding-left: 10px;
+        color: #c0f1ff;
+        font-size: 16px;
     }
 </style>
