@@ -2,7 +2,7 @@
   <div id="app">
       <a-layout id="components-layout-demo-fixed-sider">
           <a-layout-sider :style="[styles.sider, styles.siderBg]">
-              <div class="logo">电影系统管理后台</div>
+              <div class="logo">电影推荐系统后台</div>
               <a-menu
                       theme="dark"
                       mode="inline"
@@ -65,10 +65,6 @@
                             url: '/list'
                         },{
                             id: '1-2',
-                            name: '拉黑名单',
-                            url: '/blackList'
-                        },{
-                            id: '1-3',
                             name: '经验特权',
                             url: '/vip'
                         }
@@ -265,6 +261,7 @@
         font-size: 16px;
         font-weight: 600;
         color: #fff;
+        text-align: center;
     }
     /*菜单a标签*/
     .ant-menu.ant-menu-dark a{
