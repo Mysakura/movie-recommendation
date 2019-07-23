@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     mode: 'history',
@@ -16,11 +16,16 @@ export default new Router({
         {
             path: '/userManage',
             name: 'userManage',
-            component: () => import('./views/UserList.vue'),
+            component: () => import('./views/module/UserView.vue'),
             children: [
                 {
+                    // 当 /userManage/list 匹配成功
+                    // UserList 会被渲染在 UserView 的 <router-view> 中
                     path: 'list',
                     component: () => import('./views/UserList.vue')
+                },{
+                    path: 'vip',
+                    component: () => import('./views/UserExp.vue')
                 }
             ]
         }
