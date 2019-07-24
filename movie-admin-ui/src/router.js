@@ -12,8 +12,7 @@ export default new Router({
             path: '/',
             name: 'home',
             component: Home
-        },
-        {
+        }, {
             path: '/userManage',
             name: 'userManage',
             component: () => import('./views/module/UserView.vue'),
@@ -26,6 +25,22 @@ export default new Router({
                 },{
                     path: 'vip',
                     component: () => import('./views/UserExp.vue')
+                }
+            ]
+        }, {
+            path: '/groupManage',
+            name: 'groupManage',
+            component: () => import('./views/module/GroupView.vue'),
+            children: [
+                {
+                    path: 'list',
+                    component: () => import('./views/GroupList.vue')
+                },{
+                    path: 'classify',
+                    component: () => import('./views/GroupClassify.vue')
+                },{
+                    path: 'topic',
+                    component: () => import('./views/GroupTopic.vue')
                 }
             ]
         }

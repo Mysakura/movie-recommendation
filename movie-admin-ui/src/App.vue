@@ -7,15 +7,15 @@
                       theme="dark"
                       mode="inline"
                       :defaultSelectedKeys="common.defaultActive"
-                      :openKeys.sync="common.defaultOpen"
+                      :defaultOpenKeys="common.defaultOpen"
+                      :openKeys.sync="common.currentOpen"
                       :selectedKeys="common.currentActive"
                       :style="styles.siderBg"
-                      @click="updateNav"
               >
                   <a-sub-menu v-for="m in navs" :key="m.id">
                       <span slot="title"><a-icon :type="m.icon" /><span>{{m.name}}</span></span>
                       <a-menu-item v-for="sm in m.subNavs" :key="sm.id">
-                          <span class="nav-text">
+                          <span>
                               <router-link :to="m.url + sm.url">{{sm.name}}</router-link>
                           </span>
                       </a-menu-item>
@@ -204,31 +204,39 @@
                 // 默认激活的菜单
                 defaultActive: ['0-1'],
                 // 当前激活的菜单，改变这个才生效
+                currentOpen: [],
                 currentActive: []
             }
         }),
+        // 监听路由变化，进而更新激活菜单的样式
+        watch: {
+            '$route.path': function(){
+                this.updateNav();
+            }
+        },
         methods: {
             updateNav: function () {
                 let me = this;
                 let r = location.pathname;
                 let par = r.substring(0, r.lastIndexOf('/'));
                 let chi = r.substring(r.lastIndexOf('/'));
+                console.log('路由：', me.$router.currentRoute.fullPath);
                 console.log('地址栏：', r, par, chi);
                 if(r === '/'){
-                    me.common.defaultOpen = ['0'];
+                    me.common.currentOpen = ['0'];
                     me.common.currentActive = ['0-1'];
                 }
                 for(let n in me.navs){
                     if(me.navs[n].url === par){
-                        me.common.defaultOpen = [me.navs[n].id];
+                        me.common.currentOpen = [me.navs[n].id];
                         for(let c in me.navs[n].subNavs){
                             if(me.navs[n].subNavs[c].url === chi){
                                 me.common.currentActive = [me.navs[n].subNavs[c].id];
-
-                                console.log(me.common.defaultOpen, me.common.defaultActive, me.common.currentActive)
-                                return;
+                                console.log(me.common.currentOpen, me.common.currentActive)
+                                break;
                             }
                         }
+                        break;
                     }
                 }
             },

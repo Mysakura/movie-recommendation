@@ -6,85 +6,53 @@
                 @submit="handleSubmit"
                 class="mb-15"
         >
-            <a-form-item label="用户名">
-                <a-input id="userName" v-decorator="['userName',{}]">
+            <a-form-item label="分类名称">
+                <a-input v-decorator="['classifyName',{}]">
                     <a-icon
                             slot="prefix"
-                            type="user"
+                            type="appstore"
                             style="color:rgba(0,0,0,.25)"
                     />
                 </a-input>
-            </a-form-item>
-            <a-form-item label="角色">
-                <a-select v-decorator="['role',{initialValue: '9'}]">
-                    <a-select-option value="9">
-                        全部
-                    </a-select-option>
-                    <a-select-option value="1">
-                        管理员
-                    </a-select-option>
-                    <a-select-option value="2">
-                        用户
-                    </a-select-option>
-                </a-select>
-            </a-form-item>
-            <a-form-item label="状态">
-                <a-select v-decorator="['deleteFlag',{initialValue: '9'}]">
-                    <a-select-option value="9">
-                        全部
-                    </a-select-option>
-                    <a-select-option value="0">
-                        正常
-                    </a-select-option>
-                    <a-select-option value="1">
-                        删除
-                    </a-select-option>
-                </a-select>
             </a-form-item>
             <a-form-item>
                 <a-button
                         type="primary"
                         html-type="submit"
+                        class="mr-15"
                 >
                     查询
                 </a-button>
             </a-form-item>
         </a-form>
-        <!--:scroll="{ y: 140 }"-->
         <a-table :columns="common.columns" :dataSource="data" bordered size="middle">
-            <template v-slot:userName="text">
-                <a href="javascript:;">{{text}}</a>
-            </template>
-
-            <template v-slot:role="text">
-                <a-tag v-if="text == '用户'" color="blue">{{text}}</a-tag>
-                <a-tag v-else color="red">{{text}}</a-tag>
+            <template v-slot:classifyName="text">
+                <a-tag color="green" :key="text">{{text}}</a-tag>
             </template>
             <template v-slot:status="status">
                 <a-tag v-if="status == '正常'" color="blue" :key="status">{{status}}</a-tag>
                 <a-tag v-else color="red" :key="status">{{status}}</a-tag>
             </template>
-
+            <template v-slot:createUser="text">
+                <a href="javascript:;">{{text}}</a>
+            </template>
+            <template v-slot:updateUser="text">
+                <a href="javascript:;">{{text}}</a>
+            </template>
             <template v-slot:action="text, record">
                 <a href="javascript:;" :data-set="JSON.stringify(record)">Edit</a>
                 <a-divider type="vertical"/>
                 <a href="javascript:;">Delete</a>
-                <a-divider type="vertical"/>
-                <a href="javascript:;">Look Exp</a>
             </template>
         </a-table>
-        <!--<a-pagination showSizeChanger :pageSize.sync="common.pageSize" @showSizeChange="onShowSizeChange" :total="500"-->
-                      <!--v-model="common.current"/>-->
     </div>
 </template>
 
 <script>
     export default {
-        name: "user-list",
+        name: "group-classify",
         data: () => ({
             common: {
-                // pageSize: 10,
-                // current: 1,
                 columns: [
                     {
                         title: 'ID',  // 表头名称
@@ -92,42 +60,47 @@
                         key: 'id',
                         scopedSlots: { customRender: 'id' },
                         width: 50
-                    },{
-                        title: '用户名',  // 表头名称
-                        dataIndex: 'userName',
-                        key: 'userName',
-                        scopedSlots: { customRender: 'userName' },
+                    }, {
+                        title: '分类名称',
+                        dataIndex: 'classifyName',
+                        key: 'classifyName',
+                        scopedSlots: { customRender: 'classifyName' },
                         width: 150
                     }, {
                         title: '创建时间',
-                        dataIndex: 'age',
-                        key: 'age',
-                        scopedSlots: { customRender: 'age' },
+                        dataIndex: 'createTime',
+                        key: 'createTime',
+                        scopedSlots: { customRender: 'createTime' },
                         width: 200
+                    }, {
+                        title: '创建人',
+                        dataIndex: 'createUser',
+                        key: 'createUser',
+                        scopedSlots: { customRender: 'createUser' },
+                        width: 150
                     }, {
                         title: '更新时间',
-                        dataIndex: 'address',
-                        key: 'address',
-                        scopedSlots: { customRender: 'address' },
+                        dataIndex: 'updateTime',
+                        key: 'updateTime',
+                        scopedSlots: { customRender: 'updateTime' },
                         width: 200
                     }, {
-                        title: '角色',
-                        key: 'role',
-                        dataIndex: 'role',
-                        scopedSlots: { customRender: 'role' },
-                        width: 100
+                        title: '更新人',
+                        dataIndex: 'updateUser',
+                        key: 'updateUser',
+                        scopedSlots: { customRender: 'updateUser' },
+                        width: 150
                     }, {
                         title: '状态',
-                        key: 'status',
                         dataIndex: 'status',
+                        key: 'status',
                         scopedSlots: { customRender: 'status' },
                         width: 100
                     }, {
                         title: '操作',
                         key: 'action',
                         dataIndex: 'action',
-                        scopedSlots: { customRender: 'action' },
-                        // width: 250
+                        scopedSlots: { customRender: 'action' }
                     }
                 ]
             },
@@ -135,27 +108,30 @@
                 {
                     key: '1',
                     id: '1',
-                    userName: 'John Brown',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '管理员',
-                    status: '正常',
+                    classifyName: '电影电视',
+                    createUser: '午夜快车',
+                    updateUser: '午夜快车',
+                    createTime: '2019-07-23 11:37',
+                    updateTime: '2019-07-23 11:37',
+                    status: '正常'
                 }, {
                     key: '2',
                     id: '2',
-                    userName: 'Jim Green',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '用户',
-                    status: '删除',
+                    classifyName: '生活时尚',
+                    createUser: '客星探',
+                    updateUser: '客星探',
+                    createTime: '2019-07-23 11:37',
+                    updateTime: '2019-07-23 11:37',
+                    status: '删除'
                 }, {
                     key: '3',
                     id: '3',
-                    userName: 'Joe Black',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '用户',
-                    status: '删除',
+                    classifyName: '文化艺术',
+                    createUser: '狼790952',
+                    updateUser: '狼790952',
+                    createTime: '2019-07-23 11:37',
+                    updateTime: '2019-07-23 11:37',
+                    status: '正常'
                 }
             ]
         }),
