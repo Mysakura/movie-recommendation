@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 14/07/2019 14:44:44
+ Date: 25/07/2019 11:13:42
 */
 
 SET NAMES utf8mb4;
@@ -143,20 +143,6 @@ CREATE TABLE `exp_log`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户经验日志' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for fans
--- ----------------------------
-DROP TABLE IF EXISTS `fans`;
-CREATE TABLE `fans`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NULL DEFAULT NULL COMMENT '用户',
-  `fans_id` int(11) NULL DEFAULT NULL COMMENT '粉丝',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '粉丝表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
 -- Table structure for film_stars
 -- ----------------------------
 DROP TABLE IF EXISTS `film_stars`;
@@ -173,6 +159,21 @@ CREATE TABLE `film_stars`  (
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '影视明星' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for film_types
+-- ----------------------------
+DROP TABLE IF EXISTS `film_types`;
+CREATE TABLE `film_types`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型名称',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '影片类型' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for groups
@@ -197,6 +198,8 @@ DROP TABLE IF EXISTS `groups_classify`;
 CREATE TABLE `groups_classify`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分类名',
+  `parent_id` int(11) NULL DEFAULT NULL COMMENT '如果当前为子级分类，这个字段为父级分类的id',
+  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型（1-父级分类；2-子级分类）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -204,6 +207,22 @@ CREATE TABLE `groups_classify`  (
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '群组分类' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for groups_member
+-- ----------------------------
+DROP TABLE IF EXISTS `groups_member`;
+CREATE TABLE `groups_member`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NULL DEFAULT NULL COMMENT '群组id',
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '成员id',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '群组-成员' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for groups_topic
@@ -248,13 +267,12 @@ DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电影名',
-  `director_id` int(11) NULL DEFAULT NULL COMMENT '导演',
-  `writer_id` int(11) NULL DEFAULT NULL COMMENT '编剧',
   `regin_id` int(11) NULL DEFAULT NULL COMMENT '地区',
   `plot` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '剧情',
   `running_time` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '片长',
   `cover` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面',
   `release_time` date NULL DEFAULT NULL COMMENT '发行日期',
+  `box_office` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '累计票房收入',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -271,13 +289,14 @@ CREATE TABLE `movie_actor`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `movie_id` int(11) NULL DEFAULT NULL COMMENT '电影id',
   `star_id` int(11) NULL DEFAULT NULL COMMENT '影人id',
+  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型（1-导演；2-编剧；3-制片；4-主演）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电影-主演' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电影-相关人员' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for movie_company
@@ -286,7 +305,8 @@ DROP TABLE IF EXISTS `movie_company`;
 CREATE TABLE `movie_company`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `movie_id` int(11) NULL DEFAULT NULL COMMENT '电影id',
-  `company_id` int(11) NULL DEFAULT NULL COMMENT '制作公司id',
+  `company_id` int(11) NULL DEFAULT NULL COMMENT '公司id',
+  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型（1-制作公司；2-发行公司）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -355,6 +375,22 @@ CREATE TABLE `movie_ticket_price`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电影票价' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for movie_type
+-- ----------------------------
+DROP TABLE IF EXISTS `movie_type`;
+CREATE TABLE `movie_type`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `movie_id` int(11) NULL DEFAULT NULL COMMENT '电影id',
+  `type_id` int(11) NULL DEFAULT NULL COMMENT '电影类型id',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '电影-类型' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for news
 -- ----------------------------
 DROP TABLE IF EXISTS `news`;
@@ -378,14 +414,14 @@ DROP TABLE IF EXISTS `news_actor`;
 CREATE TABLE `news_actor`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `news_id` int(11) NULL DEFAULT NULL COMMENT '新闻id',
-  `star_id` int(11) NULL DEFAULT NULL COMMENT '演员id',
+  `star_id` int(11) NULL DEFAULT NULL COMMENT '明星id',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '新闻-演员' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '新闻-相关人员' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for notice
@@ -405,6 +441,7 @@ DROP TABLE IF EXISTS `production_company`;
 CREATE TABLE `production_company`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '制作公司',
+  `regin_id` int(11) NULL DEFAULT NULL COMMENT '国家地区',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -484,10 +521,27 @@ CREATE TABLE `user`  (
   `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '邮箱',
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
   `signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '签名（在评论回复中显示）',
+  `role` tinyint(4) NULL DEFAULT NULL COMMENT '角色（1-管理员；2-用户）',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for user_fans
+-- ----------------------------
+DROP TABLE IF EXISTS `user_fans`;
+CREATE TABLE `user_fans`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NULL DEFAULT NULL COMMENT '用户',
+  `fans_id` int(11) NULL DEFAULT NULL COMMENT '粉丝',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '粉丝表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

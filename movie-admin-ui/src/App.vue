@@ -101,18 +101,22 @@
                             url: '/list'
                         },{
                             id: '3-2',
+                            name: '电影详细',
+                            url: '/detail'
+                        },{
+                            id: '3-3',
                             name: '电影类型',
                             url: '/type'
                         },{
-                            id: '3-3',
+                            id: '3-4',
                             name: '国家地区',
                             url: '/region'
                         },{
-                            id: '3-4',
+                            id: '3-5',
                             name: '影视明星',
                             url: '/stars'
                         },{
-                            id: '3-5',
+                            id: '3-6',
                             name: '影评管理',
                             url: '/comments'
                         }
@@ -347,7 +351,8 @@
     }
     /*滚动条样式*/
     ::-webkit-scrollbar {
-        width: 4px;
+        width: 5px; /*针对纵向*/
+        height: 5px;/*针对横向*/
     }
     ::-webkit-scrollbar-thumb {
         border-radius: 10px;
@@ -358,6 +363,11 @@
         -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
         border-radius: 0;
         background: rgba(0,0,0,0.1);
-
     }
+    ::-webkit-scrollbar-track:hover {
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 140, 139, 0.2);
+        border-radius: 0;
+        background: rgba(0, 140, 139, 0.1);
+    }
+
 </style>

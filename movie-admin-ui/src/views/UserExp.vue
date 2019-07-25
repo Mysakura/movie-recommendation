@@ -130,20 +130,12 @@
             }
         },
         watch: {
-            pageSize(val) {
-                console.log('pageSize', val);
-            },
-            current(val) {
-                console.log('current', val);
-            }
+            //
         },
         mounted: function() {
 
         },
         methods: {
-            onShowSizeChange(current, pageSize) {
-                console.log(current, pageSize);
-            },
             // Only show error after a field is touched.
             handleSubmit  (e) {
                 e.preventDefault()

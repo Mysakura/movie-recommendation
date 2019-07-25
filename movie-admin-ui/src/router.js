@@ -43,6 +43,31 @@ export default new Router({
                     component: () => import('./views/GroupTopic.vue')
                 }
             ]
+        }, {
+            path: '/movieManage',
+            name: 'movieManage',
+            component: () => import('./views/module/MovieView.vue'),
+            children: [
+                {
+                    path: 'list',
+                    component: () => import('./views/MovieList.vue')
+                },{
+                    path: 'detail',
+                    component: () => import('./views/MovieDetails.vue')
+                },{
+                    path: 'type',
+                    component: () => import('./views/MovieList.vue')
+                },{
+                    path: 'region',
+                    component: () => import('./views/MovieList.vue')
+                },{
+                    path: 'stars',
+                    component: () => import('./views/MovieList.vue')
+                },{
+                    path: 'comments',
+                    component: () => import('./views/MovieList.vue')
+                }
+            ]
         }
     ]
 })
