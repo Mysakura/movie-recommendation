@@ -34,11 +34,15 @@
             },bgColor: {
                 type: String,
                 default: '#5d5d5d'
+            },width: {
+                type: String,
+                default: ''
             }
         },
         computed: {
             ratio: function () {
-                return this.already/this.total*100 + '%';
+                // 如果配置了百分比的width属性，则优先使用width
+                return this.width ? this.width : this.already/this.total*100 + '%';
             },
             showText: function () {
                 if(this.progressText === ''){
@@ -66,6 +70,7 @@
         position: relative;
         border-bottom-left-radius: 3px;
         border-top-left-radius: 3px;
+        background-color: #efefef;
     }
     .outer .inner{
         position: absolute;

@@ -23,6 +23,11 @@
 			<artifactId>shiro-core</artifactId>
 			<version>${shiro.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.tobato</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>${fastdfs.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
