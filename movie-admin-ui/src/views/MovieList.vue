@@ -36,7 +36,10 @@
                 <a href="javascript:;">{{writer.name}}</a>
             </template>
             <template v-slot:actor="actor">
-                <a v-for="a in actor" href="javascript:;">{{a.name}}</a>
+                <template v-for="a in actor">
+                    <a href="javascript:;">{{a.name}}</a>
+                    <a-divider type="vertical"/>
+                </template>
             </template>
             <template v-slot:regin="regin">
                 <a href="javascript:;">{{regin.name}}</a>
