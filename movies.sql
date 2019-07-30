@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 25/07/2019 11:13:42
+ Date: 30/07/2019 14:12:37
 */
 
 SET NAMES utf8mb4;
@@ -161,19 +161,20 @@ CREATE TABLE `film_stars`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '影视明星' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for film_types
+-- Table structure for film_types_regions
 -- ----------------------------
-DROP TABLE IF EXISTS `film_types`;
-CREATE TABLE `film_types`  (
+DROP TABLE IF EXISTS `film_types_regions`;
+CREATE TABLE `film_types_regions`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型名称',
+  `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型（1-影片类型；2-国家地区）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '影片类型' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '影片类型&国家地区' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for groups
@@ -267,7 +268,7 @@ DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电影名',
-  `regin_id` int(11) NULL DEFAULT NULL COMMENT '地区',
+  `region_id` int(11) NULL DEFAULT NULL COMMENT '地区',
   `plot` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '剧情',
   `running_time` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '片长',
   `cover` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面',
@@ -290,6 +291,7 @@ CREATE TABLE `movie_actor`  (
   `movie_id` int(11) NULL DEFAULT NULL COMMENT '电影id',
   `star_id` int(11) NULL DEFAULT NULL COMMENT '影人id',
   `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型（1-导演；2-编剧；3-制片；4-主演）',
+  `character` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '饰演的角色',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -441,7 +443,7 @@ DROP TABLE IF EXISTS `production_company`;
 CREATE TABLE `production_company`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '制作公司',
-  `regin_id` int(11) NULL DEFAULT NULL COMMENT '国家地区',
+  `region_id` int(11) NULL DEFAULT NULL COMMENT '国家地区',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -449,21 +451,6 @@ CREATE TABLE `production_company`  (
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '制作公司' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for regin
--- ----------------------------
-DROP TABLE IF EXISTS `regin`;
-CREATE TABLE `regin`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '国家地区',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
-  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '国家地区' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for replies
@@ -508,7 +495,13 @@ CREATE TABLE `test`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '测试表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '测试表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of test
+-- ----------------------------
+INSERT INTO `test` VALUES (1, 'A');
+INSERT INTO `test` VALUES (2, 'B');
 
 -- ----------------------------
 -- Table structure for user
