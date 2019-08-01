@@ -289,7 +289,7 @@
                 }]
             },
             mapForAdd:{
-                center: {lng: 121.4472540000, lat: 31.3236200000},
+                center: {lng: 116.307819, lat: 40.059545},
                 zoom: 3,
                 show: true,
                 dragging: true,
@@ -299,14 +299,19 @@
                 isAdd: true
             },
             mapForLook:{
-                center: {lng: 121.4472540000, lat: 31.3236200000},
+                center: {lng: 116.307819, lat: 40.059545},
                 zoom: 17,
                 show: true,
                 dragging: false,
                 location: '',
                 keyword: '',
                 // 查看或者选点
-                isAdd: false
+                isAdd: false,
+                data: {
+                    name: '上海宝山万达广场店',
+                    address: '上海市宝山区一二八纪念路936号5楼（万达广场2号门 直达电梯可到）',
+                    phone: '021-31150880-810'
+                }
             },
             submitData: {
                 lng: null,

@@ -26,9 +26,9 @@
             <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
             <bm-marker v-if="!map.isAdd" :position="map.center" :dragging="map.dragging" animation="BMAP_ANIMATION_DROP">
                 <bm-info-window :show="map.show">
-                    <h3>上海宝山万达广场店</h3>
-                    <div>地址：上海市宝山区一二八纪念路936号5楼（万达广场2号门 直达电梯可到）</div>
-                    <div>电话：021-31150880-810</div>
+                    <h3>{{map.data.name}}</h3>
+                    <div>地址：{{map.data.address}}</div>
+                    <div>电话：{{map.data.phone}}</div>
                 </bm-info-window>
             </bm-marker>
             <bm-local-search v-if="map.isAdd" class="search-result" :keyword="map.keyword" :auto-viewport="true" :location="map.location"></bm-local-search>
