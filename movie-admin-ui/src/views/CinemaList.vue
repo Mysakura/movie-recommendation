@@ -49,79 +49,59 @@
             <a-form :form="formForAdd" layout="vertical" hideRequiredMark>
                 <a-row :gutter="16">
                     <a-col :span="12">
-                        <a-form-item label="Name">
+                        <a-form-item label="名称">
                             <a-input
                                     v-decorator="['name', {
-                  rules: [{ required: true, message: 'Please enter user name' }]
-                }]"
-                                    placeholder="Please enter user name"
+                                      rules: [{ required: true, message: '请输入影院名称' }]
+                                    }]"
+                                    placeholder="请输入影院名称"
                             />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-item label="Url">
+                        <a-form-item label="联系电话">
+                            <!--addonBefore="http://"-->
+                            <!--addonAfter=".com"-->
                             <a-input
-                                    v-decorator="['url', {
-                  rules: [{ required: true, message: 'please enter url' }]
-                }]"
+                                    v-decorator="['phone', {
+                                      rules: [{ required: true, message: '请输入联系电话' }]
+                                    }]"
                                     style="width: 100%"
-                                    addonBefore="http://"
-                                    addonAfter=".com"
-                                    placeholder="please enter url"
+                                    placeholder="请输入联系电话"
+                            />
+                        </a-form-item>
+                    </a-col>
+                </a-row>
+                <a-row :gutter="16">
+                    <a-col :span="24">
+                        <a-form-item label="影院地址">
+                            <a-input
+                                    v-decorator="['address', {
+                                      rules: [{ required: true, message: '请输入地址' }]
+                                    }]"
+                                    placeholder="请输入地址"
                             />
                         </a-form-item>
                     </a-col>
                 </a-row>
                 <a-row :gutter="16">
                     <a-col :span="12">
-                        <a-form-item label="Owner">
-                            <a-select
-                                    v-decorator="['owner', {
-                  rules: [{ required: true, message: 'Please select an owner' }]
-                }]"
-                                    placeholder="Please a-s an owner"
-                            >
-                                <a-select-option value="xiao">Xiaoxiao Fu</a-select-option>
-                                <a-select-option value="mao">Maomao Zhou</a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
-                        <a-form-item label="Type">
-                            <a-select
-                                    v-decorator="['type', {
-                  rules: [{ required: true, message: 'Please choose the type' }]
-                }]"
-                                    placeholder="Please choose the type"
-                            >
-                                <a-select-option value="private">Private</a-select-option>
-                                <a-select-option value="public">Public</a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col>
-                </a-row>
-                <a-row :gutter="16">
-                    <a-col :span="12">
-                        <a-form-item label="Approver">
-                            <a-select
-                                    v-decorator="['approver', {
-                  rules: [{ required: true, message: 'Please choose the approver' }]
-                }]"
-                                    placeholder="Please choose the approver"
-                            >
-                                <a-select-option value="jack">Jack Ma</a-select-option>
-                                <a-select-option value="tom">Tom Liu</a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
-                        <a-form-item label="DateTime">
-                            <a-date-picker
-                                    v-decorator="['dateTime', {
-                  rules: [{ required: true, message: 'Please choose the dateTime' }]
-                }]"
+                        <a-form-item label="营业开始">
+                            <a-time-picker
+                                    v-decorator="['openBeginTime', {
+                                      rules: [{ required: true, message: '请选择开始时间' }]
+                                    }]"
                                     style="width: 100%"
-                                    :getPopupContainer="trigger => trigger.parentNode"
+                            />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12">
+                        <a-form-item label="营业结束">
+                            <a-time-picker
+                                    v-decorator="['openEndTime', {
+                                      rules: [{ required: true, message: '请选择结束时间' }]
+                                    }]"
+                                    style="width: 100%"
                             />
                         </a-form-item>
                     </a-col>
@@ -161,25 +141,14 @@
                 </a-row>
             </a-form>
             <simple-map :map="mapForAdd" @select-location="selectLocation"></simple-map>
-            <div
-                    :style="{
-          position: 'absolute',
-          left: 0,
-          bottom: 0,
-          width: '100%',
-          borderTop: '1px solid #e9e9e9',
-          padding: '10px 16px',
-          background: '#fff',
-          textAlign: 'right',
-        }"
-            >
+            <div class="drawer-btn">
                 <a-button
                         :style="{marginRight: '8px'}"
                         @click="onClose"
                 >
                     Cancel
                 </a-button>
-                <a-button @click="onClose" type="primary">Submit</a-button>
+                <a-button @click="handleAddSubmit" type="primary">Submit</a-button>
             </div>
         </a-drawer>
         <a-drawer
@@ -190,18 +159,7 @@
                 :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
         >
             <simple-map :map="mapForLook"></simple-map>
-            <div
-                    :style="{
-          position: 'absolute',
-          left: 0,
-          bottom: 0,
-          width: '100%',
-          borderTop: '1px solid #e9e9e9',
-          padding: '10px 16px',
-          background: '#fff',
-          textAlign: 'right',
-        }"
-            >
+            <div class="drawer-btn">
                 <a-button @click="onMapClose" type="primary">OK</a-button>
             </div>
         </a-drawer>
@@ -304,7 +262,7 @@
             },
             mapForLook:{
                 center: {lng: 121.4472540000, lat: 31.3236200000},
-                zoom: 15,
+                zoom: 17,
                 show: true,
                 dragging: false,
                 location: '',
@@ -376,6 +334,16 @@
             onClose() {
                 this.common.visible = false
             },
+            handleAddSubmit  (e) {
+                e.preventDefault()
+                this.formForAdd.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values);
+                        // 格式化成字符串
+                        console.log('time: ', values.openBeginTime.format('HH:mm:ss'));
+                    }
+                });
+            },
             showMapDrawer() {
                 this.common.mapVisible = true
             },
@@ -393,5 +361,14 @@
 </script>
 
 <style scoped>
-
+    .drawer-btn{
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        border-top: 1px solid rgb(233, 233, 233);
+        padding: 10px 16px;
+        background: rgb(255, 255, 255);
+        text-align: right;
+    }
 </style>
