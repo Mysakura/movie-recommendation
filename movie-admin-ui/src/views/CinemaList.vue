@@ -120,6 +120,27 @@
                     </a-col>
                 </a-row>
                 <a-row :gutter="16">
+                    <a-col :span="24">
+                        <a-form-item label="影院照片">
+                            <a-upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    :fileList="upload.fileList"
+                                    @preview="handleUploadPreview"
+                                    @change="handleUploadChange"
+                            >
+                                <div v-if="upload.fileList.length < 5">
+                                    <a-icon type="plus" />
+                                    <div class="ant-upload-text">Upload</div>
+                                </div>
+                            </a-upload>
+                            <a-modal :visible="upload.previewVisible" :footer="null" @cancel="handleUploadCancel">
+                                <img alt="example" style="width: 100%" :src="upload.previewImage" />
+                            </a-modal>
+                        </a-form-item>
+                    </a-col>
+                </a-row>
+                <a-row :gutter="16">
                     <a-col :span="12">
                         <a-form-item label="经度">
                             <a-input
@@ -250,6 +271,23 @@
                     }
                 ]
             },
+            upload: {
+                previewVisible: false,
+                previewImage: '',
+                fileList: [{
+                    uid: '-1',
+                    name: 'xxx.png',
+                    status: 'done',
+                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+                    // 上传返回数据格式
+                    // {
+                    //     "name": "xxx.png",
+                    //     "status": "done",
+                    //     "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                    //     "thumbUrl": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    // }
+                }]
+            },
             mapForAdd:{
                 center: {lng: 121.4472540000, lat: 31.3236200000},
                 zoom: 3,
@@ -316,6 +354,16 @@
 
         },
         methods: {
+            handleUploadCancel () {
+                this.upload.previewVisible = false
+            },
+            handleUploadPreview (file) {
+                this.upload.previewImage = file.url || file.thumbUrl
+                this.upload.previewVisible = true
+            },
+            handleUploadChange ({ fileList }) {
+                this.upload.fileList = fileList
+            },
             handleChange(value) {
                 console.log(`Selected: ${value}`);
             },
