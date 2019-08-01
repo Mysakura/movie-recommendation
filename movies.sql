@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 30/07/2019 14:12:37
+ Date: 01/08/2019 11:18:24
 */
 
 SET NAMES utf8mb4;
@@ -45,13 +45,16 @@ CREATE TABLE `cinema`  (
 DROP TABLE IF EXISTS `cinema_order`;
 CREATE TABLE `cinema_order`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_number` bigint(20) NULL DEFAULT NULL COMMENT '订单编号',
   `cinema_id` int(11) NULL DEFAULT NULL COMMENT '影院id',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '用户id',
+  `phone` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系手机号',
   `ticket_price` int(11) NULL DEFAULT NULL COMMENT '票价（单位：分）',
   `discount` int(11) NULL DEFAULT NULL COMMENT '折扣（计算除100）',
   `actual_payment` int(11) NULL DEFAULT NULL COMMENT '实付款（单位：分）',
   `seat_id` int(11) NULL DEFAULT NULL COMMENT '座位id',
   `shows_no` datetime(0) NULL DEFAULT NULL COMMENT '场次',
+  `status` tinyint(4) NULL DEFAULT NULL COMMENT '状态（1-已付款；2-未付款；3-已取消；4-订单超时）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -451,6 +454,26 @@ CREATE TABLE `production_company`  (
   `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '制作公司' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for province
+-- ----------------------------
+DROP TABLE IF EXISTS `province`;
+CREATE TABLE `province`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `level` tinyint(4) NULL DEFAULT NULL COMMENT '级别（1-省；2-市；3-区）',
+  `province` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省编号',
+  `city` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '市编号',
+  `county` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区编号',
+  `letter_sort` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'A-Z排序（仅限市级字母开头）',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `update_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '更新人',
+  `delete_flag` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志（0-否；1-是）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '省市区' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for replies

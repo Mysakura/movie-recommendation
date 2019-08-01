@@ -16,6 +16,7 @@
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "vue": "^2.6.10",
+    "vue-baidu-map": "^0.21.22",
     "vue-chartjs": "^3.4.2",
     "vue-easy-pie-chart": "^1.0.3",
     "vue-router": "^3.0.3",

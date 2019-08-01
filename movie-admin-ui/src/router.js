@@ -68,6 +68,25 @@ export default new Router({
                     component: () => import('./views/MovieList.vue')
                 }
             ]
+        }, {
+            path: '/cinemaManage',
+            name: 'cinemaManage',
+            component: () => import('./views/module/CinemaView.vue'),
+            children: [
+                {
+                    path: 'list',
+                    component: () => import('./views/CinemaList.vue')
+                },{
+                    path: 'seats',
+                    component: () => import('./views/CinemaSeats.vue')
+                },{
+                    path: 'shows',
+                    component: () => import('./views/CinemaShows.vue')
+                },{
+                    path: 'orders',
+                    component: () => import('./views/CinemaOrders.vue')
+                }
+            ]
         }
     ]
 })
