@@ -31,7 +31,12 @@
             <template v-slot:name="text">
                 <a href="javascript:;">{{text}}</a>
             </template>
-
+            <template v-slot:price="text">
+                <span style="font-weight: 600">￥{{text}}</span>
+            </template>
+            <template v-slot:realPrice="text">
+                <span style="font-weight: 600">￥{{text}}</span>
+            </template>
 
             <template v-slot:orderStatus="orderStatus">
                 <a-tag v-if="orderStatus == '已付款'" color="green" :key="orderStatus">{{orderStatus}}</a-tag>

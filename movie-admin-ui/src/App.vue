@@ -141,6 +141,10 @@
                             url: '/shows'
                         },{
                             id: '4-4',
+                            name: '影院票价',
+                            url: '/tickets'
+                        },{
+                            id: '4-5',
                             name: '影院订单',
                             url: '/orders'
                         }

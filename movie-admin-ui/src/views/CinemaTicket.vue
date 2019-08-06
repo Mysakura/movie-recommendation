@@ -81,23 +81,29 @@
                 </a-row>
                 <a-row :gutter="16">
                     <a-col :span="12">
-                        <a-form-item label="日期">
-                            <a-date-picker
-                                    v-decorator="['date', {
-                                      rules: [{ required: true, message: '请选择日期' }]
+                        <a-form-item label="票价">
+                            <a-input-number
+                                    v-decorator="['ticketPrice', {
+                                      rules: [{ required: true, message: '请填写票价' }]
                                     }]"
                                     style="width: 100%"
+                                    :min="1"
+                                    :max="100"
                             />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-item label="场次">
-                            <a-time-picker
-                                    format="h:mm a"
-                                    v-decorator="['time', {
-                                      rules: [{ required: true, message: '请选择场次' }]
+                        <a-form-item label="折扣">
+                            <a-input-number
+                                    v-decorator="['discount', {
+                                      rules: [{ required: true, message: '请选择场次' }],
+                                      initialValue: 100
                                     }]"
                                     style="width: 100%"
+                                    :min="1"
+                                    :max="100"
+                                    :formatter="value => `${value}%`"
+                                    :parser="value => value.replace('%', '')"
                             />
                         </a-form-item>
                     </a-col>
@@ -168,8 +174,8 @@
             <a-radio-group @change="onSelectMovieChange" v-model="submitData.selectMovie">
                 <template v-for="i in movieData">
                     <!--<a-radio class="radio-style" :value="i.id">-->
-                        <!--<img :src="i.cover"/>-->
-                        <!--<span>{{i.name}}</span>-->
+                    <!--<img :src="i.cover"/>-->
+                    <!--<span>{{i.name}}</span>-->
                     <!--</a-radio>-->
                     <a-radio-button class="radio-style" :value="i.id">
                         <img :src="i.cover"/>
@@ -185,6 +191,12 @@
 
             <template v-slot:movie="movie">
                 <a href="javascript:;">{{movie.name}}</a>
+            </template>
+            <template v-slot:ticketPrice="ticketPrice">
+                {{ticketPrice/100}}
+            </template>
+            <template v-slot:discount="discount">
+                {{discount}}%
             </template>
 
             <template v-slot:status="status">
@@ -205,7 +217,7 @@
 
 <script>
     export default {
-        name: "cinema-shows",
+        name: "cinema-ticket",
         data: () => ({
             common: {
                 visible: false,
@@ -229,10 +241,15 @@
                         key: 'movie',
                         scopedSlots: { customRender: 'movie' },
                     }, {
-                        title: '场次',
-                        dataIndex: 'showsNo',
-                        key: 'showsNo',
-                        scopedSlots: { customRender: 'showsNo' },
+                        title: '票价',
+                        dataIndex: 'ticketPrice',
+                        key: 'ticketPrice',
+                        scopedSlots: { customRender: 'ticketPrice' },
+                    }, {
+                        title: '折扣',
+                        dataIndex: 'discount',
+                        key: 'discount',
+                        scopedSlots: { customRender: 'discount' },
                     }, {
                         title: '更新人',
                         dataIndex: 'updateUser',
@@ -270,7 +287,8 @@
                         id: 1,
                         name: '哪吒之魔童降世'
                     },
-                    showsNo: '8月5日  20:10',
+                    ticketPrice: 3900,
+                    discount: 88,
                     updateUser: 'Admin',
                     updateTime: '2019-07-23 11:37',
                     status: '正常'

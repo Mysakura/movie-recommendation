@@ -83,6 +83,9 @@ export default new Router({
                     path: 'shows',
                     component: () => import('./views/CinemaShows.vue')
                 },{
+                    path: 'tickets',
+                    component: () => import('./views/CinemaTicket.vue')
+                },{
                     path: 'orders',
                     component: () => import('./views/CinemaOrders.vue')
                 }

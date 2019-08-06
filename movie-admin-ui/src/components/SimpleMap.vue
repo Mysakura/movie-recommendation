@@ -24,8 +24,8 @@
             <!--<bm-navigation anchor="BMAP_ANCHOR_TOP_LEFT"></bm-navigation>-->
             <!--定位-->
             <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
-            <bm-marker v-if="!map.isAdd" :position="map.center" :dragging="map.dragging" animation="BMAP_ANIMATION_DROP">
-                <bm-info-window :show="map.show">
+            <bm-marker v-if="!map.isAdd" @click="infoWindowOpen" :position="map.center" :dragging="map.dragging" animation="BMAP_ANIMATION_DROP">
+                <bm-info-window :show="map.show" @open="infoWindowOpen" @close="infoWindowClose">
                     <h3>{{map.data.name}}</h3>
                     <div>地址：{{map.data.address}}</div>
                     <div>电话：{{map.data.phone}}</div>
@@ -61,6 +61,12 @@
                         lat: e.point.lat
                     });
                 })
+            },
+            infoWindowClose () {
+                this.map.show = false
+            },
+            infoWindowOpen () {
+                this.map.show = true
             }
         }
     }
