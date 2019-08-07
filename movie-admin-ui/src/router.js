@@ -62,10 +62,10 @@ export default new Router({
                     component: () => import('./views/MovieRegionList.vue')
                 },{
                     path: 'stars',
-                    component: () => import('./views/MovieList.vue')
+                    component: () => import('./views/MovieStars.vue')
                 },{
                     path: 'comments',
-                    component: () => import('./views/MovieList.vue')
+                    component: () => import('./views/MovieComments.vue')
                 }
             ]
         }, {
