@@ -64,6 +64,19 @@
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
+                        <a-form-item label="影厅">
+                            <a-select
+                                    v-decorator="['videoHall', {
+                                      rules: [{ required: true, message: '请选择影厅' }],
+
+                                    }]"
+                                    placeholder="请选择影厅"
+                                    @change="">
+                                <a-select-option value="1">1号厅</a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12">
                         <a-form-item label="电影">
                             <a-input-search
                                     v-decorator="['movie', {

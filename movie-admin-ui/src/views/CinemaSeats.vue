@@ -21,8 +21,7 @@
                 </a-input-search>
             </a-form-item>
             <a-form-item v-if="submitData.selectCinema != null && submitData.selectCinema.seats != null && submitData.selectCinema.seats.length > 0">
-                <a-select defaultValue="0" style="width: 150px;" @change="">
-                    <a-select-option value="0">请选择影厅</a-select-option>
+                <a-select style="width: 150px;" placeholder="请选择影厅" @change="">
                     <a-select-option v-for="i in submitData.selectCinema.seats" value="i.id">{{i.videoHall}}</a-select-option>
                 </a-select>
             </a-form-item>
@@ -131,16 +130,19 @@
         <a-card title="座位配置">
             <div style="text-align: center;overflow-y: hidden;">
                 <h2>金逸上海张江店 3号厅【共260个座位】</h2>
-                <p>新问题：一个电影院，有多个放映厅。相关操作的时候，没有配置放映厅，要先配置放映厅</p>
+                <p><a-button type="primary" size="small">S</a-button>：座位；<a-button type="dashed" size="small">P</a-button>：过道</p>
+                <h3>未完成：一个是座位存储，一个是座位显示问题</h3>
                 <div v-for="i in common.rowNumber" style="white-space: nowrap;">
                     <div style="display: inline-block; width: 60px;">
                         <a-tag color="#c41a5f">{{i}}排</a-tag>
                     </div>
                     <a-button-group>
-                        <!--<a-button type="primary">L</a-button>-->
-                        <a-button v-for="i in common.colNumber" type="primary" icon="shop" size="small" class="mr-15 mb-15"></a-button>
-                        <!--<a-button type="dashed">R</a-button>-->
-                        <!--<a-button>N</a-button>-->
+                        <a-tooltip v-for="j in common.colNumber">
+                            <template v-slot:title>
+                                {{i}}排{{j}}座
+                            </template>
+                            <a-button type="dashed" size="small" class="mr-15 mb-15">P</a-button>
+                        </a-tooltip>
                     </a-button-group>
                 </div>
             </div>
