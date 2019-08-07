@@ -12,6 +12,7 @@
                                       rules: [{ required: true, message: '请选择影院' }]
                                     }]"
                         placeholder="请选择影院"
+                        style="width: 300px"
                         @search="showSelectCinemaDrawer"
                 >
                     <template v-slot:enterButton>
@@ -19,16 +20,20 @@
                     </template>
                 </a-input-search>
             </a-form-item>
-
+            <a-form-item v-if="submitData.selectCinema != null && submitData.selectCinema.seats != null && submitData.selectCinema.seats.length > 0">
+                <a-select defaultValue="0" style="width: 150px;" @change="">
+                    <a-select-option value="0">请选择影厅</a-select-option>
+                    <a-select-option v-for="i in submitData.selectCinema.seats" value="i.id">{{i.videoHall}}</a-select-option>
+                </a-select>
+            </a-form-item>
             <a-form-item>
-                <a-button icon="plus" type="danger" @click="" class="mb-15 mr-15">添加</a-button>
                 <a-popover
-                        title="座位信息"
+                        title="座位配置信息"
                         trigger="click"
-                        v-model="common.seatCreateVisible"
+                        v-model="common.seatSettingVisible"
                 >
                     <template v-slot:content>
-                        <a-form :form="formForCreateSeat" layout="vertical" hideRequiredMark style="text-align: center">
+                        <a-form :form="formForSeatSetting" layout="vertical" hideRequiredMark style="text-align: center">
                             <a-row :gutter="16">
                                 <a-col :span="12">
                                     <a-form-item label="行">
@@ -57,17 +62,45 @@
                                     </a-form-item>
                                 </a-col>
                                 <a-col :span="24">
-                                    <a href="javascript:;" @click="createSeats">Create</a>
+                                    <a href="javascript:;" @click="createSeatsSetting">OK</a>
                                 </a-col>
                             </a-row>
                         </a-form>
                     </template>
-                    <a-button type="primary">座位</a-button>
+                    <a-button type="primary" icon="setting" class="mb-15 mr-15">配置</a-button>
                 </a-popover>
+                <a-popover
+                        title="当前配置添加新的影厅座位信息"
+                        trigger="click"
+                        v-model="common.seatCreateVisible"
+                >
+                    <template v-slot:content>
+                        <a-form :form="formForCreateSeat" layout="vertical" hideRequiredMark style="text-align: center">
+                            <a-row :gutter="16">
+                                <a-col :span="24">
+                                    <a-form-item label="影厅名称">
+                                        <a-input
+                                                v-decorator="['videoHall', {
+                                                  rules: [{ required: true, message: '请输入影厅名称' }]
+                                                }]"
+                                                style="width: 100%"
+                                        />
+                                    </a-form-item>
+                                </a-col>
+                                <a-col :span="24">
+                                    <a-button icon="save" type="primary" @click="handleAddSubmit" class="mb-15 mr-15">保存</a-button>
+                                </a-col>
+                            </a-row>
+                        </a-form>
+                    </template>
+                    <a-button icon="plus" type="danger" @click="" class="mb-15 mr-15">添加</a-button>
+                </a-popover>
+
+                <a-button icon="reload" type="danger" @click="" class="mb-15 mr-15">更新</a-button>
             </a-form-item>
         </a-form>
         <a-drawer
-                title="选择影院"
+                title="影院搜索"
                 :width="360"
                 @close="onSelectCinemaClose"
                 :visible="common.selectCinemaVisible"
@@ -79,9 +112,9 @@
                         <a-form-item label="名称">
                             <a-input-search
                                     v-decorator="['name', {
-                                      rules: [{ required: true, message: '请选择影院' }]
+                                      rules: [{ required: true, message: '请输入影院名称' }]
                                     }]"
-                                    placeholder="请选择影院"
+                                    placeholder="请输入影院名称查找"
                                     @search=""
                                     enterButton
                             />
@@ -91,13 +124,13 @@
             </a-form>
             <a-radio-group @change="onSelectCinemaChange" v-model="submitData.selectCinema">
                 <template v-for="i in cinemaData">
-                    <a-radio class="radio-style" :value="i.id">{{i.name}}</a-radio>
+                    <a-radio class="radio-style" :value="i">{{i.name}}</a-radio>
                 </template>
             </a-radio-group>
         </a-drawer>
-        <a-card title="座位调整">
+        <a-card title="座位配置">
             <div style="text-align: center;overflow-y: hidden;">
-                <h2>金逸上海张江店 3号厅</h2>
+                <h2>金逸上海张江店 3号厅【共260个座位】</h2>
                 <p>新问题：一个电影院，有多个放映厅。相关操作的时候，没有配置放映厅，要先配置放映厅</p>
                 <div v-for="i in common.rowNumber" style="white-space: nowrap;">
                     <div style="display: inline-block; width: 60px;">
@@ -120,6 +153,7 @@
         name: "cinema-seats",
         data: () => ({
             common: {
+                seatSettingVisible: false,
                 seatCreateVisible: false,
                 selectCinemaVisible: false,
                 rowNumber: 10,
@@ -129,15 +163,28 @@
                 {
                     key: '1',
                     id: '1',
-                    name: '上海宝山万达广场店'
+                    name: '上海宝山万达广场店',
+                    seats: [
+                        {
+                            id: 1,
+                            videoHall: '1号厅'
+                        }
+                    ]
                 },{
                     key: '2',
                     id: '2',
-                    name: '金逸上海张江店'
+                    name: '金逸上海张江店',
+                    seats: [
+                        {
+                            id: 1,
+                            videoHall: '1号厅'
+                        }
+                    ]
                 },{
                     key: '3',
                     id: '3',
-                    name: '金逸影城（上海中环杜比全景声店）'
+                    name: '金逸影城（上海中环杜比全景声店）',
+                    seats: []
                 },{
                     key: '4',
                     id: '4',
@@ -152,6 +199,8 @@
             // 处理表单使其具有自动收集数据并校验的功能
             form: function () {
                 return this.$form.createForm(this)
+            },formForSeatSetting: function () {
+                return this.$form.createForm(this)
             },formForCreateSeat: function () {
                 return this.$form.createForm(this)
             },formForSelectCinema: function () {
@@ -165,14 +214,14 @@
 
         },
         methods: {
-            createSeats:function (e) {
+            createSeatsSetting:function (e) {
                 let me = this;
                 e.preventDefault()
-                me.formForCreateSeat.validateFields((err, values) => {
+                me.formForSeatSetting.validateFields((err, values) => {
                     if (!err) {
                         me.common.rowNumber = values.rowNumber;
                         me.common.colNumber = values.colNumber;
-                        me.common.seatCreateVisible = false;
+                        me.common.seatSettingVisible = false;
                     }
                 });
             },
@@ -195,15 +244,16 @@
                 this.common.selectCinemaVisible = false
             },
             onSelectCinemaChange() {
-                console.log(this.submitData.selectCinema)
+                let data = this.submitData.selectCinema;
+                console.log(data)
+                this.form.setFieldsValue({name: data.name});
             },
             handleAddSubmit  (e) {
                 e.preventDefault()
                 this.formForCreateSeat.validateFields((err, values) => {
                     if (!err) {
                         console.log('Received values of form: ', values);
-                        // 格式化成字符串
-                        console.log('time: ', values.openBeginTime.format('HH:mm:ss'));
+                        this.common.seatCreateVisible = false;
                     }
                 });
             }
