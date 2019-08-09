@@ -6,7 +6,6 @@
                 :width="720"
                 @close="onClose"
                 :visible="common.visible"
-                :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
         >
             <a-form :form="form" layout="vertical" hideRequiredMark>
                 <a-row :gutter="16">
@@ -102,18 +101,7 @@
                     </a-col>
                 </a-row>
             </a-form>
-            <div
-                    :style="{
-          position: 'absolute',
-          left: 0,
-          bottom: 0,
-          width: '100%',
-          borderTop: '1px solid #e9e9e9',
-          padding: '10px 16px',
-          background: '#fff',
-          textAlign: 'right',
-        }"
-            >
+            <div class="drawer-btn-wrap">
                 <a-button
                         :style="{marginRight: '8px'}"
                         @click="onClose"

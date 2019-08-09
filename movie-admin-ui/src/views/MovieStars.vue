@@ -44,7 +44,6 @@
                 :width="720"
                 @close="onClose"
                 :visible="common.visible"
-                :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
         >
             <a-form :form="formForAdd" layout="vertical" hideRequiredMark>
                 <a-row :gutter="16">
@@ -160,7 +159,7 @@
                     </a-col>
                 </a-row>
             </a-form>
-            <div class="drawer-btn">
+            <div class="drawer-btn-wrap">
                 <a-button
                         :style="{marginRight: '8px'}"
                         @click="onClose"
@@ -393,14 +392,5 @@
 </script>
 
 <style scoped>
-    .drawer-btn{
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        border-top: 1px solid rgb(233, 233, 233);
-        padding: 10px 16px;
-        background: rgb(255, 255, 255);
-        text-align: right;
-    }
+
 </style>

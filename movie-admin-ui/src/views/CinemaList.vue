@@ -44,7 +44,6 @@
                 :width="720"
                 @close="onClose"
                 :visible="common.visible"
-                :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
         >
             <a-form :form="formForAdd" layout="vertical" hideRequiredMark>
                 <a-row :gutter="16">
@@ -177,7 +176,6 @@
                 :width="720"
                 @close="onMapClose"
                 :visible="common.mapVisible"
-                :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
         >
             <simple-map :map="mapForLook"></simple-map>
             <div class="drawer-btn-wrap">
