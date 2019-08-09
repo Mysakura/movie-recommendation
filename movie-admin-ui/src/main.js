@@ -5,6 +5,13 @@ import store from './store'
 import ant from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less'
 import BaiduMap from 'vue-baidu-map'
+import VueQuillEditor from 'vue-quill-editor'
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+Vue.use(VueQuillEditor, /* { default global options } */);
 
 Vue.use(BaiduMap, {
     ak: 'GpRqD2SowifsTdi1lRqD59ObuRRRRVl9'

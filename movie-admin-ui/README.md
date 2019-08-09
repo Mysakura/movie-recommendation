@@ -46,6 +46,14 @@ https://www.npmjs.com/package/vue-easy-pie-chart
 
 ```npm install vue-baidu-map```
 
+富文本编辑器【https://surmon-china.github.io/vue-quill-editor/】
+
+```npm install vue-quill-editor```
+
+代码高亮插件【https://highlightjs.org/】
+
+```npm install highlight.js```
+
 ### Project setup
 ```
 npm install

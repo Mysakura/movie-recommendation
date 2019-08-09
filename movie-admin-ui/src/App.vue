@@ -118,7 +118,7 @@
                         },{
                             id: '3-6',
                             name: '影评管理',
-                            url: '/comments'
+                            url: '/critics'
                         }
                     ]
                 },{

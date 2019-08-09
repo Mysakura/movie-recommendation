@@ -64,8 +64,11 @@ export default new Router({
                     path: 'stars',
                     component: () => import('./views/MovieStars.vue')
                 },{
-                    path: 'comments',
-                    component: () => import('./views/MovieComments.vue')
+                    path: 'critics',
+                    component: () => import('./views/MovieCritics.vue')
+                },{
+                    path: 'details/:id',
+                    component: () => import('./views/other/CriticsDetails.vue')
                 }
             ]
         }, {
@@ -88,6 +91,19 @@ export default new Router({
                 },{
                     path: 'orders',
                     component: () => import('./views/CinemaOrders.vue')
+                }
+            ]
+        }, {
+            path: '/newsManage',
+            name: 'newsManage',
+            component: () => import('./views/module/NewsView.vue'),
+            children: [
+                {
+                    path: 'list',
+                    component: () => import('./views/NewsList.vue')
+                },{
+                    path: 'details/:id',
+                    component: () => import('./views/other/NewsDetails.vue')
                 }
             ]
         }
