@@ -10,20 +10,24 @@
                           @ready="onEditorReady($event)">
             </quill-editor>
             <div>
-                <code class="hljs" v-html="contentCode"></code>
+                <p style="margin-top: 15px;">表单提交内容：</p>
+                <pre><code class="hljs" v-html="contentCode"></code></pre>
+                <p>高亮示例：</p>
+                <pre><code class="hljs" v-html="javaCode"></code></pre>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import hljs from 'highlight.js/lib/highlight'
+    import hljs from 'highlight.js'
     import 'highlight.js/styles/atom-one-dark.css';
 
     export default {
         name: "simple-editor",
         data() {
             return {
+                // 编辑器内容
                 content: ``,
                 editorOption: {
                     modules: {
@@ -63,36 +67,25 @@
             },
             contentCode() {
                 return hljs.highlightAuto(this.content).value
+            },
+            javaCode(){
+                return hljs.highlightAuto('@PostMapping("/hello")\n' +
+                    'public BaseResponse<BasePageResponse<DemoDTO>> hello(@RequestBody DemoRequest request){\n' +
+                    '    return demoFacade.getList(request);\n' +
+                    '}').value
             }
         },
         mounted() {
             console.log('this is my editor', this.editor)
-            setTimeout(() => {
-                this.content = `<h1 class="ql-align-center">
-                          <span class="ql-font-serif" style="background-color: rgb(240, 102, 102); color: rgb(255, 255, 255);"> I am Example 1! </span>
-                        </h1>
-                        <p><br></p>
-                        <p><span class="ql-font-serif">W Can a man still be brave if he's afraid? That is the only time a man can be brave. </span></p>
-                        <p><br></p>
-                        <p><strong class="ql-font-serif ql-size-large">Courage and folly is </strong><strong class="ql-font-serif ql-size-large" style="color: rgb(230, 0, 0);">always</strong><strong class="ql-font-serif ql-size-large"> just a fine line.</strong></p>
-                        <p><br></p>
-                        <p><u class="ql-font-serif">There is only one God, and his name is Death. And there is only one thing we say to Death: "Not today."</u></p>
-                        <p><br></p>
-                        <p><em class="ql-font-serif">Fear cuts deeper than swords.</em></p>
-                        <p><br></p>
-                        <pre class="ql-syntax" spellcheck="false">const a = 10;<br>const editorOption = { highlight: text => hljs.highlightAuto(text).value };</pre>
-                        <p><br></p>
-                        <p><span class="ql-font-serif">Every flight begins with a fall.</span></p>
-                        <p><br></p>
-                        <p><a href="https://surmon.me/" target="_blank" class="ql-font-serif ql-size-small" style="color: rgb(230, 0, 0);"><u>A ruler who hides behind paid executioners soon forgets what death is. </u></a></p>
-                        <p><br></p>
-                        <p><span class="ql-font-serif">Hear my words, and bear witness to my vow. Night gathers, and now my watch begins. It shall not end until my death. I shall take no wife, hold no lands, father no children. I shall wear no crowns and win no glory. I shall live and die at my post. I am the sword in the darkness. I am the watcher on the walls. I am the fire that burns against the cold, the light that brings the dawn, the horn that wakes the sleepers, the shield that guards the realms of men. I pledge my life and honor to the Night’s Watch, for this night and all the nights to come.</span></p>
-                        <p><br></p>
-                        <p><span class="ql-font-serif">We are born to suffer, to suffer can make us strong.</span></p>
-                        <p><br></p>
-                        <p><span class="ql-font-serif">The things we love destroy us every time.</span></p>
-                        `
-            }, 300)
+            this.content = `<p><br></p><p><br></p><p>JavaScript代码：</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-keyword">const</span> a = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">const</span> editorOption = { highlight: <span class="hljs-built_in">text</span> =&gt; hljs.highlightAuto(<span class="hljs-built_in">text</span>).value };
+</pre><p><br></p><p>Java代码：</p><pre class="ql-syntax" spellcheck="false">@PostMapping("/hello")
+public BaseResponse&lt;BasePageResponse&lt;DemoDTO&gt;&gt; hello(@RequestBody DemoRequest request){
+    return demoFacade.getList(request);
+}
+</pre><p><br></p>`
+        },
+        updated(){
         }
     }
 </script>
