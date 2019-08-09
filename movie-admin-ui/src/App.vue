@@ -373,5 +373,15 @@
         border-radius: 0;
         background: rgba(0, 140, 139, 0.1);
     }
-
+    /*抽屉按钮wrap*/
+    .drawer-btn-wrap{
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        width: 100%;
+        border-top: 1px solid rgb(233, 233, 233);
+        padding: 10px 16px;
+        background: rgb(255, 255, 255);
+        text-align: right;
+    }
 </style>

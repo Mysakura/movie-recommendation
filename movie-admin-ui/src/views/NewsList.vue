@@ -101,7 +101,7 @@
                     </a-col>
                 </a-row>
             </a-form>
-            <div class="drawer-btn">
+            <div class="drawer-btn-wrap">
                 <a-button :style="{marginRight: '8px'}" @click="onClose">Cancel</a-button>
                 <a-button @click="onClose" type="primary">保存</a-button>
             </div>
@@ -346,14 +346,5 @@
 </script>
 
 <style scoped>
-    .drawer-btn{
-        position: absolute;
-        left: 0px;
-        bottom: 0px;
-        width: 100%;
-        border-top: 1px solid rgb(233, 233, 233);
-        padding: 10px 16px;
-        background: rgb(255, 255, 255);
-        text-align: right;
-    }
+
 </style>

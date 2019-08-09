@@ -162,7 +162,7 @@
                 </a-row>
             </a-form>
             <simple-map :map="mapForAdd" @select-location="selectLocation"></simple-map>
-            <div class="drawer-btn">
+            <div class="drawer-btn-wrap">
                 <a-button
                         :style="{marginRight: '8px'}"
                         @click="onClose"
@@ -180,7 +180,7 @@
                 :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
         >
             <simple-map :map="mapForLook"></simple-map>
-            <div class="drawer-btn">
+            <div class="drawer-btn-wrap">
                 <a-button @click="onMapClose" type="primary">OK</a-button>
             </div>
         </a-drawer>
@@ -414,14 +414,5 @@
 </script>
 
 <style scoped>
-    .drawer-btn{
-        position: absolute;
-        left: 0px;
-        bottom: 0px;
-        width: 100%;
-        border-top: 1px solid rgb(233, 233, 233);
-        padding: 10px 16px;
-        background: rgb(255, 255, 255);
-        text-align: right;
-    }
+
 </style>
