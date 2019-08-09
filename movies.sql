@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 01/08/2019 17:11:36
+ Date: 09/08/2019 11:14:49
 */
 
 SET NAMES utf8mb4;
@@ -71,10 +71,9 @@ DROP TABLE IF EXISTS `cinema_seat`;
 CREATE TABLE `cinema_seat`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cinema_id` int(11) NULL DEFAULT NULL COMMENT '影院id',
-  `name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '座位号（如果是过道，座位号是0）',
+  `video_hall` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '放映厅（比如1号厅）',
   `row_no` int(11) NULL DEFAULT NULL COMMENT '第几排',
   `seat_no` int(11) NULL DEFAULT NULL COMMENT '第几座（如果是过道，座位号是0）',
-  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型（1-座位；2-过道）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -156,6 +155,10 @@ CREATE TABLE `film_stars`  (
   `en_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '影人英文名字',
   `photo` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '影人照片',
   `introduce` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '影人介绍',
+  `profession` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '职业（多个用 | 分隔）',
+  `birthday` date NULL DEFAULT NULL COMMENT '生日',
+  `region_id` int(11) NULL DEFAULT NULL COMMENT '出生地',
+  `height` int(11) NULL DEFAULT NULL COMMENT '身高（厘米）',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -240,6 +243,7 @@ CREATE TABLE `groups_topic`  (
   `source_content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '源代码内容，用来读取修改',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '用户',
   `group_id` int(11) NULL DEFAULT NULL COMMENT '群组id',
+  `page_view` int(11) NULL DEFAULT NULL COMMENT '浏览量',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -337,6 +341,7 @@ CREATE TABLE `movie_critics`  (
   `digest` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '摘要',
   `status` tinyint(4) NULL DEFAULT NULL COMMENT '状态（1-发布；2-草稿）',
   `allow_comment` tinyint(1) NULL DEFAULT 1 COMMENT '允许评论（0-否；1-是）',
+  `page_view` int(11) NULL DEFAULT NULL COMMENT '浏览量',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -403,8 +408,14 @@ DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '新闻标题',
-  `content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '新闻内容',
+  `front_content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '新闻内容',
+  `source_content` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '源代码内容',
   `movie_id` int(11) NULL DEFAULT NULL COMMENT '新闻关联的电影',
+  `star_id` int(11) NULL DEFAULT NULL COMMENT '新闻关联的明星',
+  `digest` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '摘要',
+  `allow_comment` tinyint(1) NULL DEFAULT 1 COMMENT '允许评论（0-否；1-是）',
+  `status` tinyint(4) NULL DEFAULT NULL COMMENT '状态（1-发布；2-草稿）',
+  `page_view` int(11) NULL DEFAULT NULL COMMENT '浏览量',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
