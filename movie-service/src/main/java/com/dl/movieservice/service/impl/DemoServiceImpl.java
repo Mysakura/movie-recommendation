@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author zgq7
  */
-@Service(value = "1")
+@Service(value = DemoServiceImpl.BEAN_NAME)
 public class DemoServiceImpl implements DemoService {
     public static final String BEAN_NAME = "demoService";
 

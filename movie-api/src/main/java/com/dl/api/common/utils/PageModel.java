@@ -53,7 +53,7 @@ public class PageModel implements Serializable {
         /**
          * 自定义页号、自定义页数、无排序、查询总数
          **/
-        public Instance(int pageSize, int pageNum) {
+        public Instance(int pageNum, int pageSize) {
             this.pageSize = pageSize;
             this.pageNum = pageNum;
             this.count = true;
