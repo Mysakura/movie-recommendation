@@ -41,6 +41,7 @@
         <dubbo.nacos.version>0.0.1</dubbo.nacos.version>
         <mybatis.generator.version>1.3.7</mybatis.generator.version>
         <tk-mybatis-mapper.version>4.1.5</tk-mybatis-mapper.version>
+        <pagehelper.version>1.2.12</pagehelper.version>
         <fastdfs.version>1.26.6</fastdfs.version>
 
         <maven.clean.version>3.1.0</maven.clean.version>
@@ -112,6 +113,12 @@
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper</artifactId>
             <version>${tk-mybatis-mapper.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
