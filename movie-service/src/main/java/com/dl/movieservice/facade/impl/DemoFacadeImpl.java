@@ -27,10 +27,7 @@ public class DemoFacadeImpl implements DemoFacade {
     private DemoService demoService;
 
     @Override
-    public BaseResponse<BasePageResponse<DemoDTO>> getList(DemoRequest request) {
-        BaseResponse<BasePageResponse<DemoDTO>> response = new BaseResponse<>();
-        return BasePackUtil.getInstance().execInvokeService(request, response, () -> {
-            response.setData(demoService.getList(request));
-        });
+    public BaseResponse<List<DemoDTO>> getList(DemoRequest request) {
+        return demoService.getList(request);
     }
 }

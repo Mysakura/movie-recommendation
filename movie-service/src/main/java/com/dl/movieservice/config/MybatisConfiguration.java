@@ -15,13 +15,13 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-@MapperScan(basePackages={"com.dl.movieservice.dao"})
+//@MapperScan(basePackages={"com.dl.movieservice.mapper.mappers"})
 @Slf4j
 public class MybatisConfiguration {
 
     private static final String url= "jdbc:mysql://localhost/movies?useSSL=false";
-    private static final String username= "root";
-    private static final String password= "1234";
+    private static final String username= "lua";
+    private static final String password= "123456";
     private static final String driverClassName= "com.mysql.jdbc.Driver";
 
     private static final int MaxActive= 5;

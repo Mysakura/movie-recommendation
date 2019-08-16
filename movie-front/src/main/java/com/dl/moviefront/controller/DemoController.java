@@ -1,7 +1,6 @@
 package com.dl.moviefront.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dl.api.common.BasePageResponse;
 import com.dl.api.common.BaseResponse;
 import com.dl.api.common.constants.DubboConstants;
 import com.dl.api.common.request.DemoRequest;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by 001977 on 2019-07-10 15:42.
@@ -23,7 +24,7 @@ public class DemoController {
     private DemoFacade demoFacade;
 
     @PostMapping("/hello")
-    public BaseResponse<BasePageResponse<DemoDTO>> hello(@RequestBody DemoRequest request){
+    public BaseResponse<List<DemoDTO>> hello(@RequestBody DemoRequest request) {
         return demoFacade.getList(request);
     }
 }
