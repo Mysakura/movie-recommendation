@@ -103,7 +103,7 @@ public class BasePackUtil {
             response.setCode(exception.getCode());
             response.setMessage(exception.getMessage());
         } else {
-            response.setCode(0);
+            response.setCode(HttpStatus.BAD_REQUEST.value());
             response.setMessage(ex.getMessage());
             log.error(MessageFormat.format(ERROR_MSG, ex.getMessage()), ex);
         }
