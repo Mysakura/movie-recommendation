@@ -8,6 +8,7 @@ import com.dl.api.common.BaseResponse;
 import com.dl.api.common.MovieException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
@@ -68,8 +69,8 @@ public class BasePackUtil {
     private <Resp extends BaseResponse> void invoke(ServiceWrapper wrapper, Resp response) {
         try {
             wrapper.invokeService();
-            response.setCode(1);
-            response.setMessage("操作成功");
+            response.setCode(HttpStatus.OK.value());
+            response.setMessage(HttpStatus.OK.getReasonPhrase());
         } catch (Exception ex) {
             handleEx(ex, response);
         } catch (Throwable throwable) {

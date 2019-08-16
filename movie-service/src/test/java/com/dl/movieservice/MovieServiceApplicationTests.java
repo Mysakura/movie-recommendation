@@ -21,7 +21,7 @@ public class MovieServiceApplicationTests {
 		demoRequest.setName("1");
 		demoRequest.setPageNo(1);
 		demoRequest.setPageSize(10);
-		System.out.println(demoService.getList(demoRequest).getData());
+		System.out.println(demoService.getList(demoRequest));
 	}
 
 }

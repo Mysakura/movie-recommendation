@@ -1,6 +1,5 @@
 package com.dl.movieservice.service;
 
-import com.dl.api.common.BaseResponse;
 import com.dl.api.common.request.DemoRequest;
 import com.dl.api.common.response.DemoDTO;
 import com.github.pagehelper.PageInfo;
@@ -10,5 +9,5 @@ import com.github.pagehelper.PageInfo;
  */
 public interface DemoService {
 
-    BaseResponse<PageInfo<DemoDTO>> getList(DemoRequest request);
+    PageInfo<DemoDTO> getList(DemoRequest request);
 }
