@@ -27,7 +27,7 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志输出文件名定义 -->
-            <fileNamePattern>./logBack/info/%d{yyyy-MM-dd}_info.log</fileNamePattern>
+            <fileNamePattern>./movie-front/logBack/info/%d{yyyy-MM-dd}_info.log</fileNamePattern>
             <!-- 文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -52,7 +52,7 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志输出文件名定义 -->
-            <fileNamePattern>./logBack/warn/%d{yyyy-MM-dd}_warn.log</fileNamePattern>
+            <fileNamePattern>./movie-front/logBack/warn/%d{yyyy-MM-dd}_warn.log</fileNamePattern>
             <!-- 文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -73,7 +73,7 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志输出文件名定义 -->
-            <fileNamePattern>./logBack/error/%d{yyyy-MM-dd}_error.log</fileNamePattern>
+            <fileNamePattern>./movie-front/logBack/error/%d{yyyy-MM-dd}_error.log</fileNamePattern>
             <!-- 文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>
@@ -94,7 +94,7 @@
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志输出文件名定义 -->
-            <fileNamePattern>./logBack/debug/%d{yyyy-MM-dd}_debug.log</fileNamePattern>
+            <fileNamePattern>./movie-front/logBack/debug/%d{yyyy-MM-dd}_debug.log</fileNamePattern>
             <!-- 文件保留天数 -->
             <MaxHistory>30</MaxHistory>
         </rollingPolicy>

@@ -24,6 +24,7 @@ import java.util.List;
  */
 @Service(value = "1")
 public class DemoServiceImpl implements DemoService {
+    public static final String BEAN_NAME = "demoService";
 
     @Autowired
     private DemoRepositry demoRepositry;
