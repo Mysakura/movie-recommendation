@@ -52,6 +52,11 @@
         <java.source.version>1.8</java.source.version>
         <java.target.version>1.8</java.target.version>
         <file.encoding>UTF-8</file.encoding>
+
+        <!-- mysql 本地驱动jar包位置 -->
+        <mysql-jar.site1>
+            D:\IntelljIdea\Maven3.5\localmaven\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar
+        </mysql-jar.site1>
     </properties>
 
     <dependencies>

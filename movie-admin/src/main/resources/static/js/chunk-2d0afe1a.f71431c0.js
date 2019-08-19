@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0afe1a"],{"0fe3":function(e,n,t){"use strict";t.r(n);var a=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[e._v("影评详细")])},c=[],i={name:"critics-details"},s=i,r=t("2877"),u=Object(r["a"])(s,a,c,!1,null,"45d950b3",null);n["default"]=u.exports}}]);
+//# sourceMappingURL=chunk-2d0afe1a.f71431c0.js.map

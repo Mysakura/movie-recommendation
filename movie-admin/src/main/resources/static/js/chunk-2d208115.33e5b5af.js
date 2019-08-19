@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d208115"],{a2e3:function(e,n,t){"use strict";t.r(n);var c=function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[e._v("\n    按照列表显示？可以按电影名、评论人搜索\n")])},a=[],o={name:"movie-comments"},s=o,u=t("2877"),i=Object(u["a"])(s,c,a,!1,null,"8833ce1e",null);n["default"]=i.exports}}]);
+//# sourceMappingURL=chunk-2d208115.33e5b5af.js.map

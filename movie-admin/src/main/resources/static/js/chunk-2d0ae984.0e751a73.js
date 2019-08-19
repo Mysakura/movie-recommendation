@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0ae984"],{"0b73":function(e,n,a){"use strict";a.r(n);var t=function(){var e=this,n=e.$createElement,a=e._self._c||n;return a("div",[e._v("新闻详细")])},c=[],s={name:"news-add"},u=s,r=a("2877"),d=Object(r["a"])(u,t,c,!1,null,"6acb64f0",null);n["default"]=d.exports}}]);
+//# sourceMappingURL=chunk-2d0ae984.0e751a73.js.map
