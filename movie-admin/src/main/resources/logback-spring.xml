@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- configuration 中设置debug=true，在springboot启动前会产生辣鸡日志 -->
 <configuration>
+
+    <springProperty scope="context" name="logback.dir" source="logging.path"/>
+
     <!--输出到控制台-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

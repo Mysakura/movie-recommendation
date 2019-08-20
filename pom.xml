@@ -177,8 +177,6 @@
             <id>dev</id>
             <properties>
                 <spring.profiles>dev</spring.profiles>
-                <!--日志基本路径-->
-                <logback.dir>/movieLogs</logback.dir>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -188,8 +186,6 @@
             <id>pro</id>
             <properties>
                 <spring.profiles>prod</spring.profiles>
-                <!--日志基本路径-->
-                <logback.dir>/movieLogs</logback.dir>
             </properties>
         </profile>
     </profiles>
