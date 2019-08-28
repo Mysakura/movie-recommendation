@@ -14,8 +14,11 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+/**
+ * CREATE USER 'lua'@'%' IDENTIFIED BY '123456';
+ * GRANT ALL ON movies.* TO 'lua'@'%';
+ */
 @Configuration
-//@MapperScan(basePackages={"com.dl.movieservice.mapper.mappers"})
 @Slf4j
 public class MybatisConfiguration {
 
