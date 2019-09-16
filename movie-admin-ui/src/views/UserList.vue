@@ -262,34 +262,7 @@
                 data: [],
                 pagination: {},
                 loading: false,
-            },
-            data: [
-                {
-                    key: '1',
-                    id: '1',
-                    userName: 'John Brown',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '管理员',
-                    status: '正常',
-                }, {
-                    key: '2',
-                    id: '2',
-                    userName: 'Jim Green',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '用户',
-                    status: '删除',
-                }, {
-                    key: '3',
-                    id: '3',
-                    userName: 'Joe Black',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '用户',
-                    status: '删除',
-                }
-            ]
+            }
         }),
         computed: {
             // 处理表单使其具有自动收集数据并校验的功能
