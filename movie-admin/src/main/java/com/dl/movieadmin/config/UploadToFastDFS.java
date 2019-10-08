@@ -7,6 +7,7 @@ import com.github.tobato.fastdfs.domain.fdfs.MetaData;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.fdfs.ThumbImageConfig;
 import com.github.tobato.fastdfs.domain.upload.FastFile;
+import com.github.tobato.fastdfs.domain.upload.FastImageFile;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UploadToFastDFS {
      * @param fileExtName
      * @return
      */
-    public Map<String, String> uploadFile(InputStream inputStream, Long fileSize, String fileExtName){
+    public Map<String, String> uploadImgWithThumb(InputStream inputStream, Long fileSize, String fileExtName){
         Map<String, String> map = new HashMap<>();
         log.info("##上传文件...");
         FastFile fastFile = new FastFile.Builder()
@@ -66,28 +67,42 @@ public class UploadToFastDFS {
         map.put("url", imgHost + fullPath);
         map.put("thumbUrl", imgHost + storePath.getGroup() + "/" + thumbImagePath);
         log.info("返回结果：{}" + JSONObject.toJSONString(map));
-        // 返回结果：{}{"name":"/wKjAgF2b_22AJ8dXAARH3MtGzfw795.png","thumbUrl":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2b_22AJ8dXAARH3MtGzfw795_96x128.png","url":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2b_22AJ8dXAARH3MtGzfw795.png"}
+        // 返回结果：{}{"name":"wKjAgF2b_22AJ8dXAARH3MtGzfw795.png","thumbUrl":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2b_22AJ8dXAARH3MtGzfw795_96x128.png","url":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2b_22AJ8dXAARH3MtGzfw795.png"}
         return map;
     }
 
     /**
-     * 上传示例
+     * 仅仅上传图片
      * @param inputStream
      * @param fileSize
      * @param fileExtName
      */
-    public void upload(InputStream inputStream, Long fileSize, String fileExtName){
-        FastFile fastFile = new FastFile.Builder()
+    public Map<String, String> uploadImg(InputStream inputStream, Long fileSize, String fileExtName){
+        Map<String, String> map = new HashMap<>();
+        FastImageFile fastFile = new FastImageFile.Builder()
                 .withFile(inputStream, fileSize, fileExtName)
                 .build();
-        processUploadFileAndMetaData(fastFile);
+        StorePath storePath = storageClient.uploadImage(fastFile);
+        log.info("上传文件结果...{}", storePath);
+        // 带分组的路径
+        String fullPath = storePath.getFullPath();
+        log.info("带分组的路径...{}", fullPath);
+        String path = storePath.getPath();
+        log.info("路径...{}", path);
+
+        map.put("name", storePath.getFullPath().substring(storePath.getFullPath().lastIndexOf("/")+1));
+        map.put("url", imgHost + fullPath);
+        log.info("返回结果：{}" + JSONObject.toJSONString(map));
+        return map;
     }
 
     /**
-     * 上传和删除示例
-     * @param fastFile
+     * 上传和删除文件
      */
-    private void processUploadFileAndMetaData(FastFile fastFile) {
+    private void processUploadFileAndMetaData(InputStream inputStream, Long fileSize, String fileExtName) {
+        FastImageFile fastFile = new FastImageFile.Builder()
+                .withFile(inputStream, fileSize, fileExtName)
+                .build();
         log.info("##上传文件..##");
         // 上传文件和Metadata
         StorePath path = storageClient.uploadFile(fastFile);

@@ -1,5 +1,11 @@
 # movie-admin-ui
 
+### 运行之前
+
+1. main.js
+ - Axios.defaults.baseURL = 'http://localhost:8081';    // 打包之前注释掉
+ - Vue.prototype.$uploadHost = 'http://localhost:8081'; // 打包之前置为空字符串
+
 ### axios
 ```
 npm insatll axios

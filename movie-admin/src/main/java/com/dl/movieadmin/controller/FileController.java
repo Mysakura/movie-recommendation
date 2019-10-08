@@ -33,17 +33,40 @@ public class FileController extends BaseController {
      */
     @PostMapping("img")
     public Map<String, String> uploadImg(@RequestParam("file") MultipartFile file) throws Exception {
-
         try {
             String fileExtName = FilenameUtils.getExtension(file.getOriginalFilename());
             InputStream inputStream = file.getInputStream();
-            Map<String, String> uploadFileInfo = uploadToFastDFS.uploadFile(inputStream, file.getSize(), fileExtName);
+            Map<String, String> uploadFileInfo = uploadToFastDFS.uploadImg(inputStream, file.getSize(), fileExtName);
             uploadFileInfo.put("status", "done");
             return uploadFileInfo;
         }catch (Exception e){
             log.error("上传图片出错：{}", e);
             HashMap<String, String> map = new HashMap<>();
             map.put("status", "fail");
+            map.put("message", e.getMessage());
+            return map;
+        }
+    }
+
+    /**
+     * 上传图片并生成缩略图
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("imgWithThumb")
+    public Map<String, String> uploadImgWithThumb(@RequestParam("file") MultipartFile file) throws Exception {
+        try {
+            String fileExtName = FilenameUtils.getExtension(file.getOriginalFilename());
+            InputStream inputStream = file.getInputStream();
+            Map<String, String> uploadFileInfo = uploadToFastDFS.uploadImgWithThumb(inputStream, file.getSize(), fileExtName);
+            uploadFileInfo.put("status", "done");
+            return uploadFileInfo;
+        }catch (Exception e){
+            log.error("上传图片出错：{}", e);
+            HashMap<String, String> map = new HashMap<>();
+            map.put("status", "fail");
+            map.put("message", e.getMessage());
             return map;
         }
     }
