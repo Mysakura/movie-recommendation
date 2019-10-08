@@ -61,92 +61,83 @@
             <a-form :form="formForAdd" layout="vertical" hideRequiredMark>
                 <a-row :gutter="16">
                     <a-col :span="12">
-                        <a-form-item label="Name">
+                        <a-form-item label="用户名">
                             <a-input
-                                    v-decorator="['name', {
-                  rules: [{ required: true, message: 'Please enter user name' }]
-                }]"
+                                    v-decorator="['userName', {
+                                      rules: [{ required: true, message: 'Please enter user name' }]
+                                    }]"
                                     placeholder="Please enter user name"
                             />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-item label="Url">
+                        <a-form-item label="密码">
                             <a-input
-                                    v-decorator="['url', {
-                  rules: [{ required: true, message: 'please enter url' }]
-                }]"
-                                    style="width: 100%"
-                                    addonBefore="http://"
-                                    addonAfter=".com"
-                                    placeholder="please enter url"
+                                    v-decorator="['password', {
+                                      rules: [{ required: true, message: 'please enter password' }]
+                                    }]"
+                                    type="password"
+                                    placeholder="please enter password"
                             />
                         </a-form-item>
                     </a-col>
                 </a-row>
                 <a-row :gutter="16">
                     <a-col :span="12">
-                        <a-form-item label="Owner">
-                            <a-select
-                                    v-decorator="['owner', {
-                  rules: [{ required: true, message: 'Please select an owner' }]
-                }]"
-                                    placeholder="Please a-s an owner"
-                            >
-                                <a-select-option value="xiao">Xiaoxiao Fu</a-select-option>
-                                <a-select-option value="mao">Maomao Zhou</a-select-option>
-                            </a-select>
+                        <a-form-item label="邮箱">
+                            <a-input
+                                    v-decorator="['email', {
+                                      rules: [{ required: true, message: 'Please select an email' }]
+                                    }]"
+                                    placeholder="Please a-s an email"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
-                        <a-form-item label="Type">
+                        <a-form-item label="角色">
                             <a-select
-                                    v-decorator="['type', {
-                  rules: [{ required: true, message: 'Please choose the type' }]
-                }]"
-                                    placeholder="Please choose the type"
+                                    v-decorator="['role', {
+                                      rules: [{ required: true, message: 'Please choose the role' }],
+                                      initialValue: '2'
+                                    }]"
+                                    placeholder="Please choose the role"
                             >
-                                <a-select-option value="private">Private</a-select-option>
-                                <a-select-option value="public">Public</a-select-option>
+                                <a-select-option value="1">管理员</a-select-option>
+                                <a-select-option value="2">用户</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
                 </a-row>
                 <a-row :gutter="16">
                     <a-col :span="12">
-                        <a-form-item label="Approver">
-                            <a-select
-                                    v-decorator="['approver', {
-                  rules: [{ required: true, message: 'Please choose the approver' }]
-                }]"
-                                    placeholder="Please choose the approver"
+                        <a-form-item label="头像">
+                            <a-upload
+                                    :action="uploadPath"
+                                    listType="picture-card"
+                                    :fileList="upload.fileList"
+                                    @preview="handleUploadPreview"
+                                    @change="handleUploadChange"
                             >
-                                <a-select-option value="jack">Jack Ma</a-select-option>
-                                <a-select-option value="tom">Tom Liu</a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :span="12">
-                        <a-form-item label="DateTime">
-                            <a-date-picker
-                                    v-decorator="['dateTime', {
-                  rules: [{ required: true, message: 'Please choose the dateTime' }]
-                }]"
-                                    style="width: 100%"
-                                    :getPopupContainer="trigger => trigger.parentNode"
-                            />
+                                <div v-if="upload.fileList.length < 1">
+                                    <a-icon type="plus" />
+                                    <div class="ant-upload-text">Upload</div>
+                                </div>
+                            </a-upload>
+                            <a-modal :visible="upload.previewVisible" :footer="null" @cancel="handleUploadCancel">
+                                <img alt="example" style="width: 100%" :src="upload.previewImage" />
+                            </a-modal>
                         </a-form-item>
                     </a-col>
                 </a-row>
                 <a-row :gutter="16">
                     <a-col :span="24">
-                        <a-form-item label="Description">
+                        <a-form-item label="签名">
                             <a-textarea
-                                    v-decorator="['description', {
-                  rules: [{ required: true, message: 'Please enter url description' }]
-                }]"
+                                    v-decorator="['signature', {
+                                      rules: [{ required: true, message: 'Please enter signature' }]
+                                    }]"
                                     :rows="4"
-                                    placeholder="please enter url description"
+                                    placeholder="please enter signature"
                             />
                         </a-form-item>
                     </a-col>
@@ -159,22 +150,28 @@
                 >
                     Cancel
                 </a-button>
-                <a-button @click="onClose" type="primary">Submit</a-button>
+                <a-button @click="onAddUser" type="primary">Submit</a-button>
             </div>
         </a-drawer>
         <!--:scroll="{ y: 140 }"-->
-        <a-table :columns="common.columns" :dataSource="data" bordered size="middle">
+        <a-table bordered size="middle"
+                :columns="common.columns"
+                :dataSource="tableData.data"
+                 :pagination="tableData.pagination"
+                :loading="tableData.loading"
+                @change="handleTableChange"
+        >
             <template v-slot:userName="text">
                 <a href="javascript:;">{{text}}</a>
             </template>
 
             <template v-slot:role="text">
-                <a-tag v-if="text == '用户'" color="blue">{{text}}</a-tag>
-                <a-tag v-else color="red">{{text}}</a-tag>
+                <a-tag v-if="text == '2'" color="blue">用户</a-tag>
+                <a-tag v-else color="red">管理员</a-tag>
             </template>
-            <template v-slot:status="status">
-                <a-tag v-if="status == '正常'" color="blue" :key="status">{{status}}</a-tag>
-                <a-tag v-else color="red" :key="status">{{status}}</a-tag>
+            <template v-slot:deleteFlag="deleteFlag">
+                <a-tag v-if="deleteFlag == 0" color="blue" :key="deleteFlag">正常</a-tag>
+                <a-tag v-else color="red" :key="deleteFlag">删除</a-tag>
             </template>
 
             <template v-slot:action="text, record">
@@ -213,15 +210,15 @@
                         width: 150
                     }, {
                         title: '创建时间',
-                        dataIndex: 'age',
-                        key: 'age',
-                        scopedSlots: { customRender: 'age' },
+                        dataIndex: 'createTime',
+                        key: 'createTime',
+                        scopedSlots: { customRender: 'createTime' },
                         width: 200
                     }, {
                         title: '更新时间',
-                        dataIndex: 'address',
-                        key: 'address',
-                        scopedSlots: { customRender: 'address' },
+                        dataIndex: 'updateTime',
+                        key: 'updateTime',
+                        scopedSlots: { customRender: 'updateTime' },
                         width: 200
                     }, {
                         title: '角色',
@@ -231,9 +228,9 @@
                         width: 100
                     }, {
                         title: '状态',
-                        key: 'status',
-                        dataIndex: 'status',
-                        scopedSlots: { customRender: 'status' },
+                        key: 'deleteFlag',
+                        dataIndex: 'deleteFlag',
+                        scopedSlots: { customRender: 'deleteFlag' },
                         width: 100
                     }, {
                         title: '操作',
@@ -244,33 +241,23 @@
                     }
                 ]
             },
-            data: [
-                {
-                    key: '1',
-                    id: '1',
-                    userName: 'John Brown',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '管理员',
-                    status: '正常',
-                }, {
-                    key: '2',
-                    id: '2',
-                    userName: 'Jim Green',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '用户',
-                    status: '删除',
-                }, {
-                    key: '3',
-                    id: '3',
-                    userName: 'Joe Black',
-                    age: '2019-07-23 11:37',
-                    address: '2019-07-23 11:37',
-                    role: '用户',
-                    status: '删除',
-                }
-            ]
+            upload: {
+                previewVisible: false,
+                previewImage: '',
+                fileList: []
+                // 上传返回数据格式
+                // {
+                //     "name": "xxx.png",
+                //     "status": "done",
+                //     "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                //     "thumbUrl": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                // }
+            },
+            tableData: {
+                data: [],
+                pagination: {},
+                loading: false,
+            }
         }),
         computed: {
             // 处理表单使其具有自动收集数据并校验的功能
@@ -278,6 +265,8 @@
                 return this.$form.createForm(this)
             },formForAdd: function () {
                 return this.$form.createForm(this)
+            },uploadPath: function () {
+                return this.$uploadHost + '/upload/img'
             }
         },
         watch: {
@@ -289,9 +278,56 @@
             // }
         },
         mounted: function() {
-
+            this.fetch();
         },
         methods: {
+            // 翻页触发
+            handleTableChange (pagination, filters, sorter) {
+                let me = this;
+                console.log(pagination);
+                const pager = { ...me.tableData.pagination };
+                pager.current = pagination.current;
+                me.tableData.pagination = pager;
+                me.fetch({
+                    pageSize: pagination.pageSize,
+                    pageNo: pagination.current,
+                    ...filters,
+                });
+            },
+            // 向后台请求数据
+            fetch (params = {}) {
+                let me = this;
+                console.log('params:', params);
+                me.tableData.loading = true;
+                me.$axios.post('/user/list',{
+                    pageNo: 1,
+                    pageSize: 10,
+                    ...params
+                })
+                    .then((response) => {
+                        let list = response.data.data.dataList;
+                        console.log('----------',response.data)
+                        list.forEach((i) => {
+                            i.key = i.id;
+                        })
+                        console.log('results:', list);
+                        const pagination = { ...me.tableData.pagination };
+                        pagination.total = response.data.data.pageInfo.totalPage;
+                        me.tableData.loading = false;
+                        me.tableData.data = list;
+                        me.tableData.pagination = pagination;
+                    });
+            },
+            handleUploadCancel () {
+                this.upload.previewVisible = false
+            },
+            handleUploadPreview (file) {
+                this.upload.previewImage = file.url || file.thumbUrl
+                this.upload.previewVisible = true
+            },
+            handleUploadChange ({ fileList }) {
+                this.upload.fileList = fileList
+            },
             // onShowSizeChange(current, pageSize) {
             //     console.log(current, pageSize);
             // },
@@ -310,6 +346,25 @@
             },
             onClose() {
                 this.common.visible = false
+            },
+            // 添加用户
+            onAddUser(e) {
+                let me = this;
+                e.preventDefault();
+                me.formForAdd.validateFields((err, values) => {
+                    if (!err) {
+                        let imgInfo = me.upload.fileList[0].response;
+                        values.photo = imgInfo.url;
+                        console.log('Received values of form: ', values, imgInfo);
+
+                        me.$axios.post('/user/add',values)
+                            .then((data) => {
+                                // 刷新页面
+                                me.fetch();
+                            });
+                        me.common.visible = false
+                    }
+                });
             }
         }
     }
