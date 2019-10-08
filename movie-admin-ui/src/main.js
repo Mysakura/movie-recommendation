@@ -22,6 +22,8 @@ Vue.use(ant);
 Vue.config.productionTip = false;
 Axios.defaults.baseURL = 'http://localhost:8081';
 Vue.prototype.$axios = Axios;
+// 测试环境，图片请求路径为后台地址，打包之前这个置为空
+Vue.prototype.$uploadHost = 'http://localhost:8081';
 
 new Vue({
   router,

@@ -1,6 +1,8 @@
 package com.dl.movieadmin.config;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.github.tobato.fastdfs.domain.fdfs.MetaData;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.fdfs.ThumbImageConfig;
@@ -8,7 +10,6 @@ import com.github.tobato.fastdfs.domain.upload.FastFile;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -23,6 +24,7 @@ import java.util.Set;
  */
 @Component
 @Slf4j
+@NacosPropertySource(dataId = "movie-upload",groupId = "MOVIE_GROUP",autoRefreshed = true)
 public class UploadToFastDFS {
 
     @Autowired
@@ -31,7 +33,7 @@ public class UploadToFastDFS {
     @Autowired
     private ThumbImageConfig thumbImageConfig;
 
-    @Value("${img.host}")
+    @NacosValue(value = "${img.host}", autoRefreshed = true)
     private String imgHost;
 
     /**
@@ -60,10 +62,11 @@ public class UploadToFastDFS {
         String thumbImagePath = thumbImageConfig.getThumbImagePath(storePath.getPath());
         log.info("缩略图路径...{}", thumbImagePath);
 
-        map.put("fullPath", imgHost + fullPath);
-        map.put("thumbImagePath", imgHost + storePath.getGroup() + "/" + thumbImagePath);
+        map.put("name", storePath.getFullPath().substring(storePath.getFullPath().lastIndexOf("/")+1));
+        map.put("url", imgHost + fullPath);
+        map.put("thumbUrl", imgHost + storePath.getGroup() + "/" + thumbImagePath);
         log.info("返回结果：{}" + JSONObject.toJSONString(map));
-        // 返回结果：{}{"fullPath":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2C7aqAcJNzAAFRSnsPpGY738.png","thumbImagePath":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2C7aqAcJNzAAFRSnsPpGY738_96x128.png"}
+        // 返回结果：{}{"name":"/wKjAgF2b_22AJ8dXAARH3MtGzfw795.png","thumbUrl":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2b_22AJ8dXAARH3MtGzfw795_96x128.png","url":"http://192.168.192.128:8888/group1/M00/00/00/wKjAgF2b_22AJ8dXAARH3MtGzfw795.png"}
         return map;
     }
 

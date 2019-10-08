@@ -112,7 +112,7 @@
                     <a-col :span="12">
                         <a-form-item label="头像">
                             <a-upload
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    :action="uploadPath"
                                     listType="picture-card"
                                     :fileList="upload.fileList"
                                     @preview="handleUploadPreview"
@@ -244,19 +244,14 @@
             upload: {
                 previewVisible: false,
                 previewImage: '',
-                fileList: [{
-                    uid: '-1',
-                    name: 'xxx.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                    // 上传返回数据格式
-                    // {
-                    //     "name": "xxx.png",
-                    //     "status": "done",
-                    //     "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                    //     "thumbUrl": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                    // }
-                }]
+                fileList: []
+                // 上传返回数据格式
+                // {
+                //     "name": "xxx.png",
+                //     "status": "done",
+                //     "url": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                //     "thumbUrl": "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                // }
             },
             tableData: {
                 data: [],
@@ -270,6 +265,8 @@
                 return this.$form.createForm(this)
             },formForAdd: function () {
                 return this.$form.createForm(this)
+            },uploadPath: function () {
+                return this.$uploadHost + '/upload/img'
             }
         },
         watch: {
@@ -355,7 +352,7 @@
                 e.preventDefault();
                 me.formForAdd.validateFields((err, values) => {
                     if (!err) {
-                        values.photo = me.upload.fileList[0].url;
+                        values.photo = me.upload.fileList[0].response.url;
                         console.log('Received values of form: ', values);
 
                         me.$axios.post('/user/add',values)
@@ -363,6 +360,7 @@
                                 // 刷新页面
                                 me.fetch();
                             });
+                        me.common.visible = false
                     }
                 });
             }
