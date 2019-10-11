@@ -3,12 +3,14 @@ package com.dl.movieservice.service.impl;
 import com.dl.api.common.BasePageResponse;
 import com.dl.api.common.request.UserRequest;
 import com.dl.api.common.response.UserDTO;
+import com.dl.api.common.utils.PasswordUtils;
 import com.dl.movieservice.dao.UserMapper;
 import com.dl.movieservice.model.User;
 import com.dl.movieservice.model.UserExample;
 import com.dl.movieservice.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -54,8 +56,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserForLogin(UserRequest request) {
+        String userName = request.getUserName();
+        String password = PasswordUtils.saltAndMd5(userName, request.getPassword());
+        UserExample example = new UserExample();
+        example.createCriteria().andPasswordEqualTo(password).andUserNameEqualTo(userName);
+        List<User> list = userMapper.selectByExample(example);
+        if (list.isEmpty()){
+            return null;
+        }
+        UserDTO dto = new UserDTO();
+        BeanUtils.copyProperties(list.get(0), dto);
+        return dto;
+    }
+
+    @Override
     public int addUser(UserRequest request) {
         User user = new User();
+        String password = PasswordUtils.saltAndMd5(request.getUserName(), request.getPassword());
+        request.setPassword(password);
         BeanUtils.copyProperties(request, user);
         return userMapper.insertSelective(user);
     }

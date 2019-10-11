@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @Component
 @Slf4j
-@NacosPropertySource(dataId = "movie-upload",groupId = "MOVIE_GROUP",autoRefreshed = true)
+@NacosPropertySource(dataId = "movie-config",groupId = "MOVIE_GROUP",autoRefreshed = true)
 public class UploadToFastDFS {
 
     @Autowired

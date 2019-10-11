@@ -24,6 +24,13 @@ public interface UserService {
     UserDTO getUserById(UserRequest request);
 
     /**
+     * 登录（根据用户名/邮箱）
+     * @param request
+     * @return
+     */
+    UserDTO getUserForLogin(UserRequest request);
+
+    /**
      * 添加用户
      * @param request
      */

@@ -34,6 +34,7 @@
         <mybatis.spring.version>2.0.1</mybatis.spring.version>
         <fastjson.version>1.2.58</fastjson.version>
         <shiro.version>1.4.1</shiro.version>
+        <nimbus-jose-jwt.version>7.9</nimbus-jose-jwt.version>
         <nacos.version>0.2.1</nacos.version>
         <dubbo.version>2.6.6</dubbo.version>
         <dubbo.starter.version>0.2.1.RELEASE</dubbo.starter.version>

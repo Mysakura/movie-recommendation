@@ -21,6 +21,14 @@ public class UserFacadeImpl implements UserFacade {
     private UserService userService;
 
     @Override
+    public BaseResponse<UserDTO> login(UserRequest request) {
+        BaseResponse<UserDTO> response = new BaseResponse<>();
+        return BasePackUtil.getInstance().execInvokeService(request, response, () -> {
+            response.setData(userService.getUserForLogin(request));
+        });
+    }
+
+    @Override
     public BaseResponse<BasePageResponse<UserDTO>> getUserPageList(UserRequest request) {
         BaseResponse<BasePageResponse<UserDTO>> response = new BaseResponse<>();
         return BasePackUtil.getInstance().execInvokeService(request, response, () -> {

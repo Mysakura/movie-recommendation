@@ -11,6 +11,13 @@ import com.dl.api.common.response.UserDTO;
 public interface UserFacade {
 
     /**
+     * 登录
+     * @param request
+     * @return
+     */
+    BaseResponse<UserDTO> login(UserRequest request);
+
+    /**
      * 用户列表
      * @param request
      * @return
